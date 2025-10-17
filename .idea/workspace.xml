@@ -1,21 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="AutoImportSettings">
+
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="76e36aff-9b4d-4c8f-8b82-5464e90a9800" name="변경" comment="mission/#4">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
+
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="c2df379a-7c1e-41aa-ba05-7d30619ed749" name="변경" comment="mission/#4" />
+
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
         <entry key="$PROJECT_DIR$" value="main" />
+
+  <component name="ChangesViewManager" show_ignored="true">
+    <option name="groupingKeys">
+      <option value="directory" />
+      <option value="module" />
+      <option value="repository" />
+    </option>
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$/demo">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$/demo/build.gradle">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/demo">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="demo" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <excluded-from-favorite>
+      <branch-storage>
+        <map>
+          <entry type="LOCAL">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="master" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </excluded-from-favorite>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="shina/#4" />
+
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -26,12 +99,21 @@
     &quot;assignee&quot;: &quot;seorin05&quot;
   }
 }</component>
+
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/SSUMC-9th/Spring_Boot_E.git&quot;,
     &quot;accountId&quot;: &quot;d1af20d8-5945-41f0-a1d5-b83b139c6a4c&quot;
   }
 }</component>
+
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/SSUMC-9th/Spring_Boot_E.git",
+    "accountId": "10c163a8-1b11-418e-92a0-4eb79460285a"
+  }
+}]]></component>
+
   <component name="KubernetesApiPersistence">{}</component>
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
@@ -40,6 +122,7 @@
     <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
+
   &quot;associatedIndex&quot;: 6
 }</component>
   <component name="ProjectId" id="33v8ANRidClt0oobN5mXKPQwLXz" />
@@ -70,6 +153,148 @@
       <recent name="C:\Users\po0or\IdeaProjects\Spring_Boot_E\.github" />
     </key>
   </component>
+
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="338Wp1Fu4p7PdWQgmeddbIa3Kfa" />
+  <component name="ProjectReloadState">
+    <option name="STATE" value="1" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.demo.executor": "Run",
+    "Gradle.C:/Users/po0or/Downloads/demo/demo/build.gradle.executor": "Run",
+    "Gradle.demo 빌드.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "Spring Boot.DemoApplication.executor": "Run",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "shina/main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/po0or/Downloads/demo/demo/src/main/java/com/example/demo/domain/marketing",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "프로젝트",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
+    "vue.rearranger.settings.migration": "true",
+    "애플리케이션.DemoApplication.executor": "Run",
+    "애플리케이션.demo.executor": "Run"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql_aurora"
+    ]
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\po0or\Downloads\demo\demo\src\main\java\com\example\demo\domain\marketing" />
+      <recent name="C:\Users\po0or\Downloads\demo\demo\src\main\java\com\example\demo\domain\alram" />
+      <recent name="C:\Users\po0or\Downloads\demo\demo\src\main\java\com\example\demo\domain\review" />
+      <recent name="C:\Users\po0or\Downloads\demo\demo\src\main\java\com\example\demo\domain\mission" />
+      <recent name="C:\Users\po0or\Downloads\demo\demo\src\main\java\com\example\demo\domain\member" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Gradle.C:/Users/po0or/Downloads/demo/demo/build.gradle">
+    <configuration default="true" type="Application" factoryName="Application">
+      <envs>
+        <env name="DB_PW" value="050626aa!!" />
+        <env name="DB_URL" value="jdbc:mysql://localhost:3306/umc9th" />
+        <env name="DB_USER" value="root" />
+      </envs>
+      <module name="demo" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DemoApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <envs>
+        <env name="DB_PW" value="050626aa!!" />
+        <env name="DB_URL" value="jdbc:mysql://localhost:3306/umc9th" />
+        <env name="DB_USER" value="root" />
+      </envs>
+      <option name="MAIN_CLASS_NAME" value="com.example.demo.DemoApplication" />
+      <module name="demo" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.demo.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="C:/Users/po0or/Downloads/demo/demo/build.gradle" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/demo/build.gradle" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list />
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="DemoApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <envs>
+        <env name="DB_PW" value="050626aa!!" />
+        <env name="DB_URL" value="jdbc:mysql://localhost:3306/demo?createDatabaseIfNotExist=true" />
+        <env name="DB_USER" value="root" />
+      </envs>
+      <module name="demo" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.demo.DemoApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.demo.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Gradle.C:/Users/po0or/Downloads/demo/demo/build.gradle" />
+      <item itemvalue="Spring Boot.DemoApplication" />
+      <item itemvalue="애플리케이션.DemoApplication" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.C:/Users/po0or/Downloads/demo/demo/build.gradle" />
+        <item itemvalue="Spring Boot.DemoApplication" />
+        <item itemvalue="애플리케이션.DemoApplication" />
+      </list>
+    </recent_temporary>
+  </component>
+
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -78,6 +303,7 @@
       </set>
     </attachedChunks>
   </component>
+
   <component name="TaskManager">
     <task active="true" id="Default" summary="디폴트 작업">
       <changelist id="76e36aff-9b4d-4c8f-8b82-5464e90a9800" name="변경" comment="" />
@@ -127,12 +353,73 @@
       <updated>1760187685062</updated>
     </task>
     <option name="localTasksCounter" value="5" />
+
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="애플리케이션 수준" UseSingleDictionary="true" transferred="true" />
+  <component name="StructureViewState">
+    <option name="selectedTab" value="논리" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="디폴트 작업">
+      <changelist id="c2df379a-7c1e-41aa-ba05-7d30619ed749" name="변경" comment="" />
+      <created>1758699358526</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1758699358526</updated>
+      <workItem from="1759676533421" duration="22632000" />
+      <workItem from="1760186201765" duration="44000" />
+      <workItem from="1760186370169" duration="738000" />
+      <workItem from="1760189093910" duration="770000" />
+      <workItem from="1760191645051" duration="731000" />
+    </task>
+    <task id="LOCAL-00001" summary="mission/#4">
+      <option name="closed" value="true" />
+      <created>1760189264374</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1760189264374</updated>
+    </task>
+    <task id="LOCAL-00002" summary="mission/#4">
+      <option name="closed" value="true" />
+      <created>1760189326679</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1760189326679</updated>
+    </task>
+    <task id="LOCAL-00003" summary="mission/#4">
+      <option name="closed" value="true" />
+      <created>1760189636925</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1760189636925</updated>
+    </task>
+    <task id="LOCAL-00004" summary="mission/#4">
+      <option name="closed" value="true" />
+      <created>1760191889757</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1760191889757</updated>
+    </task>
+    <task id="LOCAL-00005" summary="mission/#4">
+      <option name="closed" value="true" />
+      <created>1760192165482</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1760192165482</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
+
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+
     <option name="RECENT_FILTERS">
       <map>
         <entry key="Branch">
@@ -148,6 +435,7 @@
         </entry>
       </map>
     </option>
+
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
@@ -158,7 +446,11 @@
                   <entry key="branch">
                     <value>
                       <list>
+
                         <option value="shina/#4" />
+
+                        <option value="shina/main" />
+
                       </list>
                     </value>
                   </entry>
@@ -171,9 +463,20 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+
     <MESSAGE value="미션 업로드" />
     <MESSAGE value="docs: 리드미 및 템플릿 작성" />
     <MESSAGE value="mission/#4" />
     <option name="LAST_COMMIT_MESSAGE" value="mission/#4" />
   </component>
+
+    <MESSAGE value="Initial commit" />
+    <MESSAGE value="mission/#4" />
+    <option name="LAST_COMMIT_MESSAGE" value="mission/#4" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+
 </project>
