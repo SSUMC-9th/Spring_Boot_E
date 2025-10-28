@@ -9,7 +9,4 @@ import org.springframework.data.repository.query.Param;
 public interface MemberRepository extends JpaRepository<Member, Long> {
     @Query("SELECT DISTINCT m FROM Member m WHERE m.id = :id")
     Optional<Member> findById(@Param("id") Long id);
-
-    @Query("SELECT DISTINCT m FROM Member m JOIN FETCH m.preferFoodTypes WHERE m.id = :id")
-    Optional<Member> findByIdWithPreferFoodTypes(@Param("id") Long id);
 }
