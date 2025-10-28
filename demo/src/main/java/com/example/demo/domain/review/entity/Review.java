@@ -1,7 +1,6 @@
 package com.example.demo.domain.review.entity;
 
 import com.example.demo.domain.member.entity.Member;
-import com.example.demo.domain.mission.entity.Mission;
 import com.example.demo.domain.store.entity.Store;
 import com.example.demo.global.BaseEntity;
 import jakarta.persistence.*;
@@ -25,18 +24,17 @@ public class Review extends BaseEntity {
     @Column(name = "star",  nullable = false)
     private Integer star;
 
-    @OneToMany(mappedBy = "review", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-    private List<Reply> replyList = new ArrayList<>();
+    @Column(name = "review_content", nullable = false)
+    private String reviewContent;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "mission_id")
-    private Mission mission;
+    @JoinColumn(name = "store_id")
+    private Store store;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "store_id")
-    private Store store;
+    @OneToMany(mappedBy = "review", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    private List<ReviewPhoto> reviewPhotoList = new ArrayList<>();
 }

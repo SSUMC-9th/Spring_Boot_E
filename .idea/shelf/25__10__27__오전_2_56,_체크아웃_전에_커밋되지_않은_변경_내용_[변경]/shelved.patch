@@ -1,0 +1,1539 @@
+Index: demo/src/main/java/com/example/demo/domain/review/entity/Review.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/demo/src/main/java/com/example/demo/domain/review/entity/Review.java b/demo/src/main/java/com/example/demo/domain/review/entity/Review.java
+new file mode 100644
+--- /dev/null	(date 1761496102994)
++++ b/demo/src/main/java/com/example/demo/domain/review/entity/Review.java	(date 1761496102994)
+@@ -0,0 +1,41 @@
++package com.example.demo.domain.review.entity;
++
++import com.example.demo.domain.member.entity.Member;
++import com.example.demo.domain.mission.entity.Mission;
++import com.example.demo.domain.store.entity.Store;
++import com.example.demo.global.BaseEntity;
++import jakarta.persistence.*;
++import lombok.*;
++
++import java.util.ArrayList;
++import java.util.List;
++
++@Entity
++@Builder
++@NoArgsConstructor(access = AccessLevel.PROTECTED)
++@AllArgsConstructor(access = AccessLevel.PRIVATE)
++@Getter
++@Table(name ="review")
++public class Review extends BaseEntity {
++
++    @Id
++    @GeneratedValue(strategy = GenerationType.IDENTITY)
++    private Long id;
++
++    @Column(name = "star",  nullable = false)
++    private Integer star;
++
++    @Column(name = "review_content", nullable = false)
++    private String reviewContent;
++
++    @ManyToOne(fetch = FetchType.LAZY)
++    @JoinColumn(name = "store_id")
++    private Store store;
++
++    @ManyToOne(fetch = FetchType.LAZY)
++    @JoinColumn(name = "member_id")
++    private Member member;
++
++    @OneToMany(mappedBy = "review", cascade = CasacadeType.REMOVE, fetch = FetchType.LAZY)
++    private List<ReviewPhoto> reviewPhotoList = new ArrayList<>();
++}
+\ No newline at end of file
+Index: demo/src/main/java/com/example/demo/domain/review/entity/ReviewPhoto.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/demo/src/main/java/com/example/demo/domain/review/entity/ReviewPhoto.java b/demo/src/main/java/com/example/demo/domain/review/entity/ReviewPhoto.java
+new file mode 100644
+--- /dev/null	(date 1761495972929)
++++ b/demo/src/main/java/com/example/demo/domain/review/entity/ReviewPhoto.java	(date 1761495972929)
+@@ -0,0 +1,31 @@
++package com.example.demo.domain.review.entity;
++
++import com.example.demo.domain.member.entity.Member;
++import com.example.demo.domain.mission.entity.Mission;
++import com.example.demo.domain.store.entity.Store;
++import com.example.demo.global.BaseEntity;
++import jakarta.persistence.*;
++import lombok.*;
++
++import java.util.ArrayList;
++import java.util.List;
++
++@Entity
++@Builder
++@NoArgsConstructor(access = AccessLevel.PROTECTED)
++@AllArgsConstructor(access = AccessLevel.PRIVATE)
++@Getter
++@Table(name ="review_photo")
++public class ReviewPhoto extends BaseEntity {
++
++    @Id
++    @GeneratedValue(strategy = GenerationType.IDENTITY)
++    private Long id;
++
++    @Column(name = "review_url")
++    private String reviewUrl;
++
++    @ManyToOne(fetch = FetchType.LAZY)
++    @JoinColumn(name = "review_id")
++    private Review review;
++}
+\ No newline at end of file
+Index: demo/src/main/java/com/example/demo/domain/member/entity/Alram.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/demo/src/main/java/com/example/demo/domain/member/entity/Alram.java b/demo/src/main/java/com/example/demo/domain/member/entity/Alram.java
+new file mode 100644
+--- /dev/null	(date 1761489274781)
++++ b/demo/src/main/java/com/example/demo/domain/member/entity/Alram.java	(date 1761489274781)
+@@ -0,0 +1,31 @@
++package com.example.demo.domain.member.entity;
++
++import com.example.demo.global.BaseEntity;
++import jakarta.persistence.*;
++import lombok.*;
++import org.springframework.data.jpa.domain.support.AuditingEntityListener;
++
++import java.util.ArrayList;
++import java.util.List;
++
++@Entity
++@Builder
++@NoArgsConstructor(access = AccessLevel.PROTECTED)
++@AllArgsConstructor(access = AccessLevel.PRIVATE)
++@Getter
++@Table(name = "alram")
++@EntityListeners(AuditingEntityListener.class)
++
++public class Alram extends BaseEntity {
++    @Id
++    @GeneratedValue(strategy = GenerationType.IDENTITY)
++    private Long id;
++
++    @Column(name = "alram_dtype", nullable = false)
++    @Enumerated(EnumType.STRING)
++    private AlramDtype alramDtype;
++
++    @ManyToOne(fetch = FetchType.LAZY)
++    @JoinColumn(name = "member_id")
++    private Member member;
++}
+Index: demo/src/main/java/com/example/demo/domain/member/entity/Member.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/demo/src/main/java/com/example/demo/domain/member/entity/Member.java b/demo/src/main/java/com/example/demo/domain/member/entity/Member.java
+new file mode 100644
+--- /dev/null	(date 1761491463614)
++++ b/demo/src/main/java/com/example/demo/domain/member/entity/Member.java	(date 1761491463614)
+@@ -0,0 +1,79 @@
++package com.example.demo.domain.member.entity;
++
++import com.example.demo.domain.member.entity.mapping.MemberFood;
++import com.example.demo.domain.member.enums.Gender;
++import com.example.demo.domain.member.enums.SocialType;
++import com.example.demo.domain.review.entity.Reply;
++import com.example.demo.domain.review.entity.Review;
++import jakarta.persistence.*;
++import lombok.*;
++import org.hibernate.annotations.CreationTimestamp;
++import org.springframework.data.jpa.domain.support.AuditingEntityListener;
++
++import java.time.LocalDate;
++import java.time.LocalDateTime;
++import java.util.ArrayList;
++import java.util.List;
++
++@Entity
++@Builder
++@NoArgsConstructor(access = AccessLevel.PROTECTED)
++@AllArgsConstructor(access = AccessLevel.PRIVATE)
++@Getter
++@Table(name = "member")
++@EntityListeners(AuditingEntityListener.class)
++public class Member extends BaseEntity{
++
++    @Id
++    @GeneratedValue(strategy = GenerationType.IDENTITY)
++    private Long id;
++
++    @Column(name = "deleted_at", nullable = false)
++    private LocalDateTime deletedAt;
++
++    @Column(name = "inactive_date", nullable = false)
++    private LocalDate inactiveDate;
++
++    @Column(name = "name", length = 3, nullable = false)
++    private String name;
++
++    @Column(name = "gender", nullable = false)
++    @Enumerated(EnumType.STRING)
++    private  Gender gender;
++
++    @Column(name = "birth", nullable = false)
++    private LocalDate birth;
++
++    @Column(name = "address", nullable = false)
++    private String address;
++
++    @Column(name = "email", nullable = false)
++    private String email;
++
++    @Column(name = "phone_number", nullable = false)
++    private String phoneNumber;
++
++    @Column(name = "point", nullable = false)
++    private Integer point;
++
++
++    @Column(name = "social_type", nullable = false)
++    private SocialType socialType;
++
++    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
++    private List<MemberFood> memberFoodList = new ArrayList<>();
++
++    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
++    private List<MemberTerm> memberTermList = new ArrayList<>();
++
++    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
++    private List<Review> reviewList = new ArrayList<>();
++
++
++    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
++    private List<Inquiry> inquiryList = new ArrayList<>();
++
++
++
++
++}
+Index: demo/src/main/java/com/example/demo/domain/member/entity/Inquiry.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/demo/src/main/java/com/example/demo/domain/member/entity/Inquiry.java b/demo/src/main/java/com/example/demo/domain/member/entity/Inquiry.java
+new file mode 100644
+--- /dev/null	(date 1761489918960)
++++ b/demo/src/main/java/com/example/demo/domain/member/entity/Inquiry.java	(date 1761489918960)
+@@ -0,0 +1,35 @@
++package com.example.demo.domain.member.entity;
++
++import jakarta.persistence.*;
++import lombok.*;
++import org.springframework.data.jpa.domain.support.AuditingEntityListener;
++
++@Entity
++@Builder
++@NoArgsConstructor(access = AccessLevel.PROTECTED)
++@AllArgsConstructor(access = AccessLevel.PRIVATE)
++@Getter
++@Table(name = "inquiry")
++@EntityListeners(AuditingEntityListener.class)
++public class Inquiry {
++    @Id
++    @GeneratedValue(strategy = GenerationType.IDENTITY)
++    private Integer id;
++
++    @Column(name = "inquiry_name", nullable = false)
++    private String inquiryName;
++
++    @Column(name = "content", nullable = false)
++    private String content;
++
++    @Column(name = "status", nullable = false)
++    @Enumerated(EnumType.String)
++    private InquiryStatus status;
++
++    @Column(name = "writed_date", nullable = false)
++    private LocalDate writedDate;
++
++    @ManyToOne(fetch = FetchType.LAZY)
++    @JoinColumn(name = "member_id")
++    private Member member;
++}
+Index: demo/src/main/java/com/example/demo/domain/member/entity/InquiryPhoto.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/demo/src/main/java/com/example/demo/domain/member/entity/InquiryPhoto.java b/demo/src/main/java/com/example/demo/domain/member/entity/InquiryPhoto.java
+new file mode 100644
+--- /dev/null	(date 1761496208062)
++++ b/demo/src/main/java/com/example/demo/domain/member/entity/InquiryPhoto.java	(date 1761496208062)
+@@ -0,0 +1,31 @@
++package com.example.demo.domain.review.entity;
++
++import com.example.demo.domain.member.entity.Member;
++import com.example.demo.domain.mission.entity.Mission;
++import com.example.demo.domain.store.entity.Store;
++import com.example.demo.global.BaseEntity;
++import jakarta.persistence.*;
++import lombok.*;
++
++import java.util.ArrayList;
++import java.util.List;
++
++@Entity
++@Builder
++@NoArgsConstructor(access = AccessLevel.PROTECTED)
++@AllArgsConstructor(access = AccessLevel.PRIVATE)
++@Getter
++@Table(name ="inquiry_photo")
++public class InquiryPhoto extends BaseEntity {
++
++    @Id
++    @GeneratedValue(strategy = GenerationType.IDENTITY)
++    private Long id;
++
++    @Column(name = "inquiry_url")
++    private String inquiryUrl;
++
++    @ManyToOne(fetch = FetchType.LAZY)
++    @JoinColumn(name = "inquiry_id")
++    private Inquiry inquiry;
++}
+\ No newline at end of file
+Index: demo/gradle/wrapper/gradle-wrapper.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/demo/gradle/wrapper/gradle-wrapper.properties b/demo/gradle/wrapper/gradle-wrapper.properties
+new file mode 100644
+--- /dev/null	(date 1761499806044)
++++ b/demo/gradle/wrapper/gradle-wrapper.properties	(date 1761499806044)
+@@ -0,0 +1,7 @@
++distributionBase=GRADLE_USER_HOME
++distributionPath=wrapper/dists
++distributionUrl=https\://services.gradle.org/distributions/gradle-8.14.3-bin.zip
++networkTimeout=10000
++validateDistributionUrl=true
++zipStoreBase=GRADLE_USER_HOME
++zipStorePath=wrapper/dists
+Index: demo/src/main/java/com/example/demo/domain/mission/entity/mapping/MemberMission.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/demo/src/main/java/com/example/demo/domain/mission/entity/mapping/MemberMission.java b/demo/src/main/java/com/example/demo/domain/mission/entity/mapping/MemberMission.java
+new file mode 100644
+--- /dev/null	(date 1761492035679)
++++ b/demo/src/main/java/com/example/demo/domain/mission/entity/mapping/MemberMission.java	(date 1761492035679)
+@@ -0,0 +1,31 @@
++package com.example.demo.domain.member.entity.mapping;
++
++import com.example.demo.domain.mission.entity.Mission;
++import com.example.demo.domain.member.entity.Member;
++import jakarta.persistence.*;
++import lombok.*;
++
++@Entity
++@Builder
++@NoArgsConstructor(access = AccessLevel.PROTECTED)
++@AllArgsConstructor(access = AccessLevel.PRIVATE)
++@Getter
++@Table(name = "member_mission")
++public class MemberMission {
++
++    @Id
++    @GeneratedValue(strategy = GenerationType.IDENTITY)
++    private Long id;
++
++    @Column(name = "mission_status", nullable = false)
++    private MissionStatus missionStatus;
++
++    @ManyToOne(fetch = FetchType.LAZY)
++    @JoinColumn(name = "member_id")
++    private Member member;
++
++    //다 관계에 있는 테이블에 'Many'ToOne
++    @ManyToOne(fetch = FetchType.LAZY)
++    @JoinColumn(name = "mission_id")
++    private Mission mission;
++}
+Index: demo/src/main/java/com/example/demo/domain/mission/entity/Mission.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/demo/src/main/java/com/example/demo/domain/mission/entity/Mission.java b/demo/src/main/java/com/example/demo/domain/mission/entity/Mission.java
+new file mode 100644
+--- /dev/null	(date 1761491972220)
++++ b/demo/src/main/java/com/example/demo/domain/mission/entity/Mission.java	(date 1761491972220)
+@@ -0,0 +1,45 @@
++package com.example.demo.domain.mission.entity;
++
++import com.example.demo.domain.member.entity.Member;
++import com.example.demo.domain.member.entity.mapping.MemberFood;
++import com.example.demo.domain.member.enums.Gender;
++import com.example.demo.domain.member.enums.SocialType;
++import com.example.demo.domain.review.entity.Review;
++import com.example.demo.domain.store.entity.Store;
++import com.example.demo.global.BaseEntity;
++import jakarta.persistence.*;
++import lombok.*;
++import org.hibernate.annotations.CreationTimestamp;
++import org.springframework.data.jpa.domain.support.AuditingEntityListener;
++
++import java.time.LocalDate;
++import java.time.LocalDateTime;
++import java.util.ArrayList;
++import java.util.List;
++
++@Entity
++@Builder
++@NoArgsConstructor(access = AccessLevel.PROTECTED)
++@AllArgsConstructor(access = AccessLevel.PRIVATE)
++@Getter
++@Table(name = "mission")
++@EntityListeners(AuditingEntityListener.class)
++public class Mission extends BaseEntity{
++
++    @Id
++    @GeneratedValue(strategy = GenerationType.IDENTITY)
++    private Integer id;
++
++    @Column(name = "mission_point", nullable = false)
++    private Integer missionPoint;
++
++    @Column(name = "mission_name", nullable = false)
++    private String missionName;
++
++    @ManyToOne(fetch = FetchType.LAZY)
++    @JoinColumn(name = "store_id")
++    private Store store;
++
++    @OneToMany(mappedBy = "mission", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
++    private List<MemberMission> MemberMissionList = new ArrayList<>();
++}
+Index: .idea/.gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/.gitignore b/.idea/.gitignore
+new file mode 100644
+--- /dev/null	(date 1761501028782)
++++ b/.idea/.gitignore	(date 1761501028782)
+@@ -0,0 +1,8 @@
++# 디폴트 무시된 파일
++/shelf/
++/workspace.xml
++# 에디터 기반 HTTP 클라이언트 요청
++/httpRequests/
++# Datasource local storage ignored files
++/dataSources/
++/dataSources.local.xml
+Index: demo/gradlew
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/demo/gradlew b/demo/gradlew
+new file mode 100644
+--- /dev/null	(date 1761499806044)
++++ b/demo/gradlew	(date 1761499806044)
+@@ -0,0 +1,251 @@
++#!/bin/sh
++
++#
++# Copyright © 2015-2021 the original authors.
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#      https://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++# SPDX-License-Identifier: Apache-2.0
++#
++
++##############################################################################
++#
++#   Gradle start up script for POSIX generated by Gradle.
++#
++#   Important for running:
++#
++#   (1) You need a POSIX-compliant shell to run this script. If your /bin/sh is
++#       noncompliant, but you have some other compliant shell such as ksh or
++#       bash, then to run this script, type that shell name before the whole
++#       command line, like:
++#
++#           ksh Gradle
++#
++#       Busybox and similar reduced shells will NOT work, because this script
++#       requires all of these POSIX shell features:
++#         * functions;
++#         * expansions «$var», «${var}», «${var:-default}», «${var+SET}»,
++#           «${var#prefix}», «${var%suffix}», and «$( cmd )»;
++#         * compound commands having a testable exit status, especially «case»;
++#         * various built-in commands including «command», «set», and «ulimit».
++#
++#   Important for patching:
++#
++#   (2) This script targets any POSIX shell, so it avoids extensions provided
++#       by Bash, Ksh, etc; in particular arrays are avoided.
++#
++#       The "traditional" practice of packing multiple parameters into a
++#       space-separated string is a well documented source of bugs and security
++#       problems, so this is (mostly) avoided, by progressively accumulating
++#       options in "$@", and eventually passing that to Java.
++#
++#       Where the inherited environment variables (DEFAULT_JVM_OPTS, JAVA_OPTS,
++#       and GRADLE_OPTS) rely on word-splitting, this is performed explicitly;
++#       see the in-line comments for details.
++#
++#       There are tweaks for specific operating systems such as AIX, CygWin,
++#       Darwin, MinGW, and NonStop.
++#
++#   (3) This script is generated from the Groovy template
++#       https://github.com/gradle/gradle/blob/HEAD/platforms/jvm/plugins-application/src/main/resources/org/gradle/api/internal/plugins/unixStartScript.txt
++#       within the Gradle project.
++#
++#       You can find Gradle at https://github.com/gradle/gradle/.
++#
++##############################################################################
++
++# Attempt to set APP_HOME
++
++# Resolve links: $0 may be a link
++app_path=$0
++
++# Need this for daisy-chained symlinks.
++while
++    APP_HOME=${app_path%"${app_path##*/}"}  # leaves a trailing /; empty if no leading path
++    [ -h "$app_path" ]
++do
++    ls=$( ls -ld "$app_path" )
++    link=${ls#*' -> '}
++    case $link in             #(
++      /*)   app_path=$link ;; #(
++      *)    app_path=$APP_HOME$link ;;
++    esac
++done
++
++# This is normally unused
++# shellcheck disable=SC2034
++APP_BASE_NAME=${0##*/}
++# Discard cd standard output in case $CDPATH is set (https://github.com/gradle/gradle/issues/25036)
++APP_HOME=$( cd -P "${APP_HOME:-./}" > /dev/null && printf '%s\n' "$PWD" ) || exit
++
++# Use the maximum available, or set MAX_FD != -1 to use that value.
++MAX_FD=maximum
++
++warn () {
++    echo "$*"
++} >&2
++
++die () {
++    echo
++    echo "$*"
++    echo
++    exit 1
++} >&2
++
++# OS specific support (must be 'true' or 'false').
++cygwin=false
++msys=false
++darwin=false
++nonstop=false
++case "$( uname )" in                #(
++  CYGWIN* )         cygwin=true  ;; #(
++  Darwin* )         darwin=true  ;; #(
++  MSYS* | MINGW* )  msys=true    ;; #(
++  NONSTOP* )        nonstop=true ;;
++esac
++
++CLASSPATH="\\\"\\\""
++
++
++# Determine the Java command to use to start the JVM.
++if [ -n "$JAVA_HOME" ] ; then
++    if [ -x "$JAVA_HOME/jre/sh/java" ] ; then
++        # IBM's JDK on AIX uses strange locations for the executables
++        JAVACMD=$JAVA_HOME/jre/sh/java
++    else
++        JAVACMD=$JAVA_HOME/bin/java
++    fi
++    if [ ! -x "$JAVACMD" ] ; then
++        die "ERROR: JAVA_HOME is set to an invalid directory: $JAVA_HOME
++
++Please set the JAVA_HOME variable in your environment to match the
++location of your Java installation."
++    fi
++else
++    JAVACMD=java
++    if ! command -v java >/dev/null 2>&1
++    then
++        die "ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH.
++
++Please set the JAVA_HOME variable in your environment to match the
++location of your Java installation."
++    fi
++fi
++
++# Increase the maximum file descriptors if we can.
++if ! "$cygwin" && ! "$darwin" && ! "$nonstop" ; then
++    case $MAX_FD in #(
++      max*)
++        # In POSIX sh, ulimit -H is undefined. That's why the result is checked to see if it worked.
++        # shellcheck disable=SC2039,SC3045
++        MAX_FD=$( ulimit -H -n ) ||
++            warn "Could not query maximum file descriptor limit"
++    esac
++    case $MAX_FD in  #(
++      '' | soft) :;; #(
++      *)
++        # In POSIX sh, ulimit -n is undefined. That's why the result is checked to see if it worked.
++        # shellcheck disable=SC2039,SC3045
++        ulimit -n "$MAX_FD" ||
++            warn "Could not set maximum file descriptor limit to $MAX_FD"
++    esac
++fi
++
++# Collect all arguments for the java command, stacking in reverse order:
++#   * args from the command line
++#   * the main class name
++#   * -classpath
++#   * -D...appname settings
++#   * --module-path (only if needed)
++#   * DEFAULT_JVM_OPTS, JAVA_OPTS, and GRADLE_OPTS environment variables.
++
++# For Cygwin or MSYS, switch paths to Windows format before running java
++if "$cygwin" || "$msys" ; then
++    APP_HOME=$( cygpath --path --mixed "$APP_HOME" )
++    CLASSPATH=$( cygpath --path --mixed "$CLASSPATH" )
++
++    JAVACMD=$( cygpath --unix "$JAVACMD" )
++
++    # Now convert the arguments - kludge to limit ourselves to /bin/sh
++    for arg do
++        if
++            case $arg in                                #(
++              -*)   false ;;                            # don't mess with options #(
++              /?*)  t=${arg#/} t=/${t%%/*}              # looks like a POSIX filepath
++                    [ -e "$t" ] ;;                      #(
++              *)    false ;;
++            esac
++        then
++            arg=$( cygpath --path --ignore --mixed "$arg" )
++        fi
++        # Roll the args list around exactly as many times as the number of
++        # args, so each arg winds up back in the position where it started, but
++        # possibly modified.
++        #
++        # NB: a `for` loop captures its iteration list before it begins, so
++        # changing the positional parameters here affects neither the number of
++        # iterations, nor the values presented in `arg`.
++        shift                   # remove old arg
++        set -- "$@" "$arg"      # push replacement arg
++    done
++fi
++
++
++# Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
++DEFAULT_JVM_OPTS='"-Xmx64m" "-Xms64m"'
++
++# Collect all arguments for the java command:
++#   * DEFAULT_JVM_OPTS, JAVA_OPTS, and optsEnvironmentVar are not allowed to contain shell fragments,
++#     and any embedded shellness will be escaped.
++#   * For example: A user cannot expect ${Hostname} to be expanded, as it is an environment variable and will be
++#     treated as '${Hostname}' itself on the command line.
++
++set -- \
++        "-Dorg.gradle.appname=$APP_BASE_NAME" \
++        -classpath "$CLASSPATH" \
++        -jar "$APP_HOME/gradle/wrapper/gradle-wrapper.jar" \
++        "$@"
++
++# Stop when "xargs" is not available.
++if ! command -v xargs >/dev/null 2>&1
++then
++    die "xargs is not available"
++fi
++
++# Use "xargs" to parse quoted args.
++#
++# With -n1 it outputs one arg per line, with the quotes and backslashes removed.
++#
++# In Bash we could simply go:
++#
++#   readarray ARGS < <( xargs -n1 <<<"$var" ) &&
++#   set -- "${ARGS[@]}" "$@"
++#
++# but POSIX shell has neither arrays nor command substitution, so instead we
++# post-process each arg (as a line of input to sed) to backslash-escape any
++# character that might be a shell metacharacter, then use eval to reverse
++# that process (while maintaining the separation between arguments), and wrap
++# the whole thing up as a single "set" statement.
++#
++# This will of course break if any of these variables contains a newline or
++# an unmatched quote.
++#
++
++eval "set -- $(
++        printf '%s\n' "$DEFAULT_JVM_OPTS $JAVA_OPTS $GRADLE_OPTS" |
++        xargs -n1 |
++        sed ' s~[^-[:alnum:]+,./:=@_]~\\&~g; ' |
++        tr '\n' ' '
++    )" '"$@"'
++
++exec "$JAVACMD" "$@"
+Index: demo/.gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/demo/.gitignore b/demo/.gitignore
+new file mode 100644
+--- /dev/null	(date 1761499806038)
++++ b/demo/.gitignore	(date 1761499806038)
+@@ -0,0 +1,37 @@
++HELP.md
++.gradle
++build/
++!gradle/wrapper/gradle-wrapper.jar
++!**/src/main/**/build/
++!**/src/test/**/build/
++
++### STS ###
++.apt_generated
++.classpath
++.factorypath
++.project
++.settings
++.springBeans
++.sts4-cache
++bin/
++!**/src/main/**/bin/
++!**/src/test/**/bin/
++
++### IntelliJ IDEA ###
++.idea
++*.iws
++*.iml
++*.ipr
++out/
++!**/src/main/**/out/
++!**/src/test/**/out/
++
++### NetBeans ###
++/nbproject/private/
++/nbbuild/
++/dist/
++/nbdist/
++/.nb-gradle/
++
++### VS Code ###
++.vscode/
+Index: .idea/Spring_Boot_E.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/Spring_Boot_E.iml b/.idea/Spring_Boot_E.iml
+new file mode 100644
+--- /dev/null	(date 1761501055665)
++++ b/.idea/Spring_Boot_E.iml	(date 1761501055665)
+@@ -0,0 +1,9 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<module type="JAVA_MODULE" version="4">
++  <component name="NewModuleRootManager" inherit-compiler-output="true">
++    <exclude-output />
++    <content url="file://$MODULE_DIR$" />
++    <orderEntry type="inheritedJdk" />
++    <orderEntry type="sourceFolder" forTests="false" />
++  </component>
++</module>
+\ No newline at end of file
+Index: demo/gradlew.bat
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/demo/gradlew.bat b/demo/gradlew.bat
+new file mode 100644
+--- /dev/null	(date 1761499806044)
++++ b/demo/gradlew.bat	(date 1761499806044)
+@@ -0,0 +1,94 @@
++@rem
++@rem Copyright 2015 the original author or authors.
++@rem
++@rem Licensed under the Apache License, Version 2.0 (the "License");
++@rem you may not use this file except in compliance with the License.
++@rem You may obtain a copy of the License at
++@rem
++@rem      https://www.apache.org/licenses/LICENSE-2.0
++@rem
++@rem Unless required by applicable law or agreed to in writing, software
++@rem distributed under the License is distributed on an "AS IS" BASIS,
++@rem WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++@rem See the License for the specific language governing permissions and
++@rem limitations under the License.
++@rem
++@rem SPDX-License-Identifier: Apache-2.0
++@rem
++
++@if "%DEBUG%"=="" @echo off
++@rem ##########################################################################
++@rem
++@rem  Gradle startup script for Windows
++@rem
++@rem ##########################################################################
++
++@rem Set local scope for the variables with windows NT shell
++if "%OS%"=="Windows_NT" setlocal
++
++set DIRNAME=%~dp0
++if "%DIRNAME%"=="" set DIRNAME=.
++@rem This is normally unused
++set APP_BASE_NAME=%~n0
++set APP_HOME=%DIRNAME%
++
++@rem Resolve any "." and ".." in APP_HOME to make it shorter.
++for %%i in ("%APP_HOME%") do set APP_HOME=%%~fi
++
++@rem Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
++set DEFAULT_JVM_OPTS="-Xmx64m" "-Xms64m"
++
++@rem Find java.exe
++if defined JAVA_HOME goto findJavaFromJavaHome
++
++set JAVA_EXE=java.exe
++%JAVA_EXE% -version >NUL 2>&1
++if %ERRORLEVEL% equ 0 goto execute
++
++echo. 1>&2
++echo ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH. 1>&2
++echo. 1>&2
++echo Please set the JAVA_HOME variable in your environment to match the 1>&2
++echo location of your Java installation. 1>&2
++
++goto fail
++
++:findJavaFromJavaHome
++set JAVA_HOME=%JAVA_HOME:"=%
++set JAVA_EXE=%JAVA_HOME%/bin/java.exe
++
++if exist "%JAVA_EXE%" goto execute
++
++echo. 1>&2
++echo ERROR: JAVA_HOME is set to an invalid directory: %JAVA_HOME% 1>&2
++echo. 1>&2
++echo Please set the JAVA_HOME variable in your environment to match the 1>&2
++echo location of your Java installation. 1>&2
++
++goto fail
++
++:execute
++@rem Setup the command line
++
++set CLASSPATH=
++
++
++@rem Execute Gradle
++"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %GRADLE_OPTS% "-Dorg.gradle.appname=%APP_BASE_NAME%" -classpath "%CLASSPATH%" -jar "%APP_HOME%\gradle\wrapper\gradle-wrapper.jar" %*
++
++:end
++@rem End local scope for the variables with windows NT shell
++if %ERRORLEVEL% equ 0 goto mainEnd
++
++:fail
++rem Set variable GRADLE_EXIT_CONSOLE if you need the _script_ return code instead of
++rem the _cmd.exe /c_ return code!
++set EXIT_CODE=%ERRORLEVEL%
++if %EXIT_CODE% equ 0 set EXIT_CODE=1
++if not ""=="%GRADLE_EXIT_CONSOLE%" exit %EXIT_CODE%
++exit /b %EXIT_CODE%
++
++:mainEnd
++if "%OS%"=="Windows_NT" endlocal
++
++:omega
+Index: .idea/modules.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/modules.xml b/.idea/modules.xml
+new file mode 100644
+--- /dev/null	(date 1761501055665)
++++ b/.idea/modules.xml	(date 1761501055665)
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ProjectModuleManager">
++    <modules>
++      <module fileurl="file://$PROJECT_DIR$/.idea/Spring_Boot_E.iml" filepath="$PROJECT_DIR$/.idea/Spring_Boot_E.iml" />
++    </modules>
++  </component>
++</project>
+\ No newline at end of file
+Index: demo/src/main/java/com/example/demo/global/BaseEntity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/demo/src/main/java/com/example/demo/global/BaseEntity.java b/demo/src/main/java/com/example/demo/global/BaseEntity.java
+new file mode 100644
+--- /dev/null	(date 1761499806086)
++++ b/demo/src/main/java/com/example/demo/global/BaseEntity.java	(date 1761499806086)
+@@ -0,0 +1,26 @@
++package com.example.demo.global;
++
++
++import jakarta.persistence.Column;
++import jakarta.persistence.EntityListeners;
++import jakarta.persistence.MappedSuperclass;
++import lombok.Getter;
++import org.springframework.data.annotation.CreatedDate;
++import org.springframework.data.annotation.LastModifiedDate;
++import org.springframework.data.jpa.domain.support.AuditingEntityListener;
++
++import java.time.LocalDateTime;
++
++@MappedSuperclass
++@EntityListeners(AuditingEntityListener.class)
++@Getter
++public abstract class BaseEntity {
++
++    @CreatedDate
++    @Column(name = "created_at", nullable = false)
++    private LocalDateTime createdAt;
++
++    @LastModifiedDate
++    @Column(name = "updated_at", nullable = false)
++    private LocalDateTime updatedAt;
++}
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+new file mode 100644
+--- /dev/null	(date 1761501055681)
++++ b/.idea/misc.xml	(date 1761501055681)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_25" default="true" project-jdk-name="openjdk-25" project-jdk-type="JavaSDK">
++    <output url="file://$PROJECT_DIR$/out" />
++  </component>
++</project>
+\ No newline at end of file
+Index: demo/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/demo/build.gradle b/demo/build.gradle
+new file mode 100644
+--- /dev/null	(date 1761499806038)
++++ b/demo/build.gradle	(date 1761499806038)
+@@ -0,0 +1,39 @@
++plugins {
++	id 'java'
++	id 'org.springframework.boot' version '3.5.6'
++	id 'io.spring.dependency-management' version '1.1.7'
++}
++
++group = 'com.example'
++version = '0.0.1-SNAPSHOT'
++description = 'Demo project for Spring Boot'
++
++java {
++	toolchain {
++		languageVersion = JavaLanguageVersion.of(21)
++	}
++}
++
++configurations {
++	compileOnly {
++		extendsFrom annotationProcessor
++	}
++}
++
++repositories {
++	mavenCentral()
++}
++
++dependencies {
++	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
++	implementation 'org.springframework.boot:spring-boot-starter-web'
++	compileOnly 'org.projectlombok:lombok'
++	runtimeOnly 'com.mysql:mysql-connector-j'
++	annotationProcessor 'org.projectlombok:lombok'
++	testImplementation 'org.springframework.boot:spring-boot-starter-test'
++	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
++}
++
++tasks.named('test') {
++	useJUnitPlatform()
++}
+Index: demo/src/main/java/com/example/demo/domain/mission/enums/MissionStatus.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/demo/src/main/java/com/example/demo/domain/mission/enums/MissionStatus.java b/demo/src/main/java/com/example/demo/domain/mission/enums/MissionStatus.java
+new file mode 100644
+--- /dev/null	(date 1761491463590)
++++ b/demo/src/main/java/com/example/demo/domain/mission/enums/MissionStatus.java	(date 1761491463590)
+@@ -0,0 +1,5 @@
++package com.example.demo.domain.member.enums;
++
++public enum MissionStatus {
++    진행중, 완료
++}
+Index: demo/src/test/demo/member.sql
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/demo/src/test/demo/member.sql b/demo/src/test/demo/member.sql
+new file mode 100644
+--- /dev/null	(date 1761499806086)
++++ b/demo/src/test/demo/member.sql	(date 1761499806086)
+@@ -0,0 +1,19 @@
++create table member
++(
++    id             bigint auto_increment
++        primary key,
++    birth          date                            not null,
++    created_at     datetime(6)                     not null,
++    deleted_at     datetime(6)                     not null,
++    detail_address varchar(255)                    not null,
++    email          varchar(255)                    not null,
++    gender         enum ('FEMALE', 'MALE', 'NONE') not null,
++    name           varchar(3)                      not null,
++    phone_number   int                             not null,
++    point          int                             not null,
++    social_type    tinyint                         not null,
++    social_uid     varchar(255)                    not null,
++    updated_at     datetime(6)                     not null,
++    check (`social_type` between 0 and 3)
++);
++
+Index: demo/src/test/demo/review.sql
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/demo/src/test/demo/review.sql b/demo/src/test/demo/review.sql
+new file mode 100644
+--- /dev/null	(date 1761499806086)
++++ b/demo/src/test/demo/review.sql	(date 1761499806086)
+@@ -0,0 +1,6 @@
++create table review
++(
++    id bigint auto_increment
++        primary key
++);
++
+Index: demo/src/test/demo/member_food.sql
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/demo/src/test/demo/member_food.sql b/demo/src/test/demo/member_food.sql
+new file mode 100644
+--- /dev/null	(date 1761499806086)
++++ b/demo/src/test/demo/member_food.sql	(date 1761499806086)
+@@ -0,0 +1,30 @@
++create table member_food
++(
++    id        bigint auto_increment
++        primary key,
++    food_id   bigint null,
++    member_id bigint null,
++    constraint FK5i0iwac2dcdifkxtb64cd17o8
++        foreign key (member_id) references member (id),
++    constraint FKj1eo2o1lys37eeqycfahfr0h9
++        foreign key (food_id) references food (id)
++);
++
++
++ALTER TABLE member
++    DROP COLUMN gender;
++
++ALTER TABLE member
++    ADD gender VARCHAR(255) NOT NULL;
++
++ALTER TABLE food
++    DROP COLUMN name;
++
++ALTER TABLE food
++    ADD name VARCHAR(255) NULL;
++
++ALTER TABLE term
++    DROP COLUMN name;
++
++ALTER TABLE term
++    ADD name VARCHAR(255) NULL;
+\ No newline at end of file
+Index: demo/src/main/java/com/example/demo/domain/store/entity/Store.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/demo/src/main/java/com/example/demo/domain/store/entity/Store.java b/demo/src/main/java/com/example/demo/domain/store/entity/Store.java
+new file mode 100644
+--- /dev/null	(date 1761495972916)
++++ b/demo/src/main/java/com/example/demo/domain/store/entity/Store.java	(date 1761495972916)
+@@ -0,0 +1,34 @@
++package com.example.demo.domain.store.entity;
++
++import com.example.demo.domain.member.entity.Region;
++import com.example.demo.domain.review.entity.Review;
++import com.example.demo.global.BaseEntity;
++import jakarta.persistence.*;
++import lombok.*;
++import org.springframework.data.jpa.domain.support.AuditingEntityListener;
++
++import java.util.ArrayList;
++import java.util.List;
++
++
++@Entity
++@Builder
++@NoArgsConstructor(access = AccessLevel.PROTECTED)
++@AllArgsConstructor(access = AccessLevel.PRIVATE)
++@Getter
++@Table(name = "store")
++@EntityListeners(AuditingEntityListener.class)
++public class Store extends BaseEntity {
++    @Id
++    @GeneratedValue(strategy = GenerationType.IDENTITY)
++    private Long id;
++
++    @Column(name = "store_name", nullable = false)
++    private String storeName;
++
++    @Column(name = "store_address", nullable = false)
++    private String storeAddress;
++
++    @OneToMany(mappedBy = "store", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
++    private List<Mission> missionList = new ArrayList<>();
++}
+Index: demo/src/test/java/com/example/demo/DemoApplicationTests.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/demo/src/test/java/com/example/demo/DemoApplicationTests.java b/demo/src/test/java/com/example/demo/DemoApplicationTests.java
+new file mode 100644
+--- /dev/null	(date 1761499806102)
++++ b/demo/src/test/java/com/example/demo/DemoApplicationTests.java	(date 1761499806102)
+@@ -0,0 +1,13 @@
++package com.example.demo;
++
++import org.junit.jupiter.api.Test;
++import org.springframework.boot.test.context.SpringBootTest;
++
++@SpringBootTest
++class DemoApplicationTests {
++
++	@Test
++	void contextLoads() {
++	}
++
++}
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/vcs.xml b/.idea/vcs.xml
+new file mode 100644
+--- /dev/null	(date 1761501055687)
++++ b/.idea/vcs.xml	(date 1761501055687)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="" vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
+Index: demo/.gitattributes
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/demo/.gitattributes b/demo/.gitattributes
+new file mode 100644
+--- /dev/null	(date 1761499806038)
++++ b/demo/.gitattributes	(date 1761499806038)
+@@ -0,0 +1,3 @@
++/gradlew text eol=lf
++*.bat text eol=crlf
++*.jar binary
+Index: demo/src/main/java/com/example/demo/DemoApplication.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/demo/src/main/java/com/example/demo/DemoApplication.java b/demo/src/main/java/com/example/demo/DemoApplication.java
+new file mode 100644
+--- /dev/null	(date 1761499806054)
++++ b/demo/src/main/java/com/example/demo/DemoApplication.java	(date 1761499806054)
+@@ -0,0 +1,15 @@
++package com.example.demo;
++
++import org.springframework.boot.SpringApplication;
++import org.springframework.boot.autoconfigure.SpringBootApplication;
++import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
++
++@SpringBootApplication
++@EnableJpaAuditing
++public class DemoApplication {
++
++	public static void main(String[] args) {
++		SpringApplication.run(DemoApplication.class, args);
++	}
++
++}
+Index: demo/settings.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/demo/settings.gradle b/demo/settings.gradle
+new file mode 100644
+--- /dev/null	(date 1761499806044)
++++ b/demo/settings.gradle	(date 1761499806044)
+@@ -0,0 +1,1 @@
++rootProject.name = 'demo'
+Index: demo/src/main/resources/application.yml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/demo/src/main/resources/application.yml b/demo/src/main/resources/application.yml
+new file mode 100644
+--- /dev/null	(date 1761499806086)
++++ b/demo/src/main/resources/application.yml	(date 1761499806086)
+@@ -0,0 +1,19 @@
++spring:
++  application:
++    name: "demo" # "umc9th"
++
++  datasource:
++    driver-class-name: com.mysql.cj.jdbc.Driver # MySQL JDBC ???? ??? ??
++    url: ${DB_URL} # jdbc:mysql://localhost:3306/{???????}
++    username: ${DB_USER} # MySQL ?? ??
++    password: ${DB_PW} # MySQL ????
++
++  jpa:
++    database: mysql # ??? ?????? ?? ?? (MySQL)
++    database-platform: org.hibernate.dialect.MySQLDialect # Hibernate?? ??? MySQL ??(dialect) ??
++    show-sql: true # ??? SQL ??? ??? ???? ?? ??
++    hibernate:
++      ddl-auto: update # ?????? ?? ? ?????? ???? ??? ??
++    properties:
++      hibernate:
++        format_sql: true # ???? SQL ??? ?? ?? ???
+\ No newline at end of file
+Index: demo/src/test/demo/food.sql
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/demo/src/test/demo/food.sql b/demo/src/test/demo/food.sql
+new file mode 100644
+--- /dev/null	(date 1761499806086)
++++ b/demo/src/test/demo/food.sql	(date 1761499806086)
+@@ -0,0 +1,9 @@
++create table food
++(
++    id         bigint auto_increment
++        primary key,
++    created_at datetime(6)                                                                                 not null,
++    updated_at datetime(6)                                                                                 not null,
++    name       enum ('고기', '구이', '도시락', '디저트', '분식', '아시안푸드', '야식', '양식', '일식', '중식', '치킨', '패스트푸드', '한식') null
++);
++
+Index: demo/src/test/demo/term.sql
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/demo/src/test/demo/term.sql b/demo/src/test/demo/term.sql
+new file mode 100644
+--- /dev/null	(date 1761499806086)
++++ b/demo/src/test/demo/term.sql	(date 1761499806086)
+@@ -0,0 +1,7 @@
++create table term
++(
++    id   bigint auto_increment
++        primary key,
++    name enum ('AGE', 'LOCATION', 'MARKETING', 'PRIVACY', 'SERVICE') null
++);
++
+Index: demo/src/test/demo/reply.sql
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/demo/src/test/demo/reply.sql b/demo/src/test/demo/reply.sql
+new file mode 100644
+--- /dev/null	(date 1761499806086)
++++ b/demo/src/test/demo/reply.sql	(date 1761499806086)
+@@ -0,0 +1,12 @@
++create table reply
++(
++    id        bigint auto_increment
++        primary key,
++    content   varchar(255) null,
++    review_id bigint       null,
++    constraint UK4uh4vegunuxj6p9ilmeyy6gm2
++        unique (review_id),
++    constraint FKd5ckwt38d4ibe84wlfc3o8jw8
++        foreign key (review_id) references review (id)
++);
++
+Index: demo/src/main/java/com/example/demo/domain/member/enums/AlramDtype.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/demo/src/main/java/com/example/demo/domain/member/enums/AlramDtype.java b/demo/src/main/java/com/example/demo/domain/member/enums/AlramDtype.java
+new file mode 100644
+--- /dev/null	(date 1761491128143)
++++ b/demo/src/main/java/com/example/demo/domain/member/enums/AlramDtype.java	(date 1761491128143)
+@@ -0,0 +1,5 @@
++package com.example.demo.domain.member.enums;
++
++public enum AlramDtype {
++    REVIEW, INQUIRY, MISSION
++}
+Index: demo/src/main/java/com/example/demo/domain/member/enums/InquiryStatus.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/demo/src/main/java/com/example/demo/domain/member/enums/InquiryStatus.java b/demo/src/main/java/com/example/demo/domain/member/enums/InquiryStatus.java
+new file mode 100644
+--- /dev/null	(date 1761489918937)
++++ b/demo/src/main/java/com/example/demo/domain/member/enums/InquiryStatus.java	(date 1761489918937)
+@@ -0,0 +1,5 @@
++package com.example.demo.domain.member.enums;
++
++public enum InquiryStatus {
++    진행중, 완료
++}
+Index: demo/src/main/java/com/example/demo/domain/member/entity/mapping/MemberFood.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/demo/src/main/java/com/example/demo/domain/member/entity/mapping/MemberFood.java b/demo/src/main/java/com/example/demo/domain/member/entity/mapping/MemberFood.java
+new file mode 100644
+--- /dev/null	(date 1761491168300)
++++ b/demo/src/main/java/com/example/demo/domain/member/entity/mapping/MemberFood.java	(date 1761491168300)
+@@ -0,0 +1,28 @@
++package com.example.demo.domain.member.entity.mapping;
++
++import com.example.demo.domain.member.entity.Food;
++import com.example.demo.domain.member.entity.Member;
++import jakarta.persistence.*;
++import lombok.*;
++
++@Entity
++@Builder
++@NoArgsConstructor(access = AccessLevel.PROTECTED)
++@AllArgsConstructor(access = AccessLevel.PRIVATE)
++@Getter
++@Table(name = "member_food")
++public class MemberFood {
++
++    @Id
++    @GeneratedValue(strategy = GenerationType.IDENTITY)
++    private Long id;
++
++    @ManyToOne(fetch = FetchType.LAZY)
++    @JoinColumn(name = "member_id")
++    private Member member;
++
++    //다 관계에 있는 테이블에 'Many'ToOne
++    @ManyToOne(fetch = FetchType.LAZY)
++    @JoinColumn(name = "food_id")
++    private Food food;
++}
+Index: demo/src/main/java/com/example/demo/domain/member/entity/mapping/MemberTerm.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/demo/src/main/java/com/example/demo/domain/member/entity/mapping/MemberTerm.java b/demo/src/main/java/com/example/demo/domain/member/entity/mapping/MemberTerm.java
+new file mode 100644
+--- /dev/null	(date 1761491128196)
++++ b/demo/src/main/java/com/example/demo/domain/member/entity/mapping/MemberTerm.java	(date 1761491128196)
+@@ -0,0 +1,27 @@
++package com.example.demo.domain.member.entity.mapping;
++
++import com.example.demo.domain.member.entity.Member;
++import com.example.demo.domain.member.entity.Term;
++import jakarta.persistence.*;
++import lombok.*;
++
++@Entity
++@Builder
++@NoArgsConstructor(access = AccessLevel.PROTECTED)
++@AllArgsConstructor(access = AccessLevel.PRIVATE)
++@Getter
++@Table(name = "member_term")
++public class MemberTerm {
++    @Id
++    @GeneratedValue(strategy = GenerationType.IDENTITY)
++    private Long id;
++
++    @ManyToOne(fetch = FetchType.LAZY)
++    @JoinColumn(name = "member_id")
++    private Member member;
++
++    @ManyToOne(fetch = FetchType.LAZY)
++    @JoinColumn(name = "term_id")
++    private Term term;
++
++}
+Index: demo/src/main/java/com/example/demo/domain/member/entity/Food.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/demo/src/main/java/com/example/demo/domain/member/entity/Food.java b/demo/src/main/java/com/example/demo/domain/member/entity/Food.java
+new file mode 100644
+--- /dev/null	(date 1761491128113)
++++ b/demo/src/main/java/com/example/demo/domain/member/entity/Food.java	(date 1761491128113)
+@@ -0,0 +1,27 @@
++package com.example.demo.domain.member.entity;
++
++
++import com.example.demo.domain.member.enums.FoodName;
++import com.example.demo.global.BaseEntity;
++import jakarta.persistence.*;
++import lombok.*;
++
++@Entity
++@Builder
++@NoArgsConstructor(access = AccessLevel.PROTECTED)
++@AllArgsConstructor(access = AccessLevel.PRIVATE)
++@Getter
++@Table(name = "food")
++public class Food extends BaseEntity {
++
++    @Id
++    @GeneratedValue(strategy = GenerationType.IDENTITY)
++    private Long id;
++
++    @Column(name = "food_name")
++    @Enumerated(EnumType.STRING)
++    private FoodName name;
++
++    @OneToMany(mappedBy = "food", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
++    private List<MemberFood> memberFoodList = new ArrayList<>();
++}
+Index: demo/src/main/java/com/example/demo/domain/member/entity/Term.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/demo/src/main/java/com/example/demo/domain/member/entity/Term.java b/demo/src/main/java/com/example/demo/domain/member/entity/Term.java
+new file mode 100644
+--- /dev/null	(date 1761491128129)
++++ b/demo/src/main/java/com/example/demo/domain/member/entity/Term.java	(date 1761491128129)
+@@ -0,0 +1,24 @@
++package com.example.demo.domain.member.entity;
++
++
++import com.example.demo.domain.member.enums.TermName;
++import jakarta.persistence.*;
++import lombok.*;
++
++@Entity
++@Builder
++@NoArgsConstructor(access = AccessLevel.PROTECTED)
++@AllArgsConstructor(access = AccessLevel.PRIVATE)
++@Getter
++@Table(name = "term")
++public class Term {
++
++    @Id
++    @GeneratedValue(strategy = GenerationType.IDENTITY)
++    private Long id;
++
++    @Column(name = "term_dtype", nullable = false)
++    @Enumerated(EnumType.STRING)
++    private TermName name;
++
++}
+Index: demo/src/main/java/com/example/demo/domain/member/enums/Gender.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/demo/src/main/java/com/example/demo/domain/member/enums/Gender.java b/demo/src/main/java/com/example/demo/domain/member/enums/Gender.java
+new file mode 100644
+--- /dev/null	(date 1759722054000)
++++ b/demo/src/main/java/com/example/demo/domain/member/enums/Gender.java	(date 1759722054000)
+@@ -0,0 +1,5 @@
++package com.example.demo.domain.member.enums;
++
++public enum Gender {
++    MALE, FEMALE, NONE;
++}
+Index: demo/src/main/java/com/example/demo/domain/member/enums/FoodName.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/demo/src/main/java/com/example/demo/domain/member/enums/FoodName.java b/demo/src/main/java/com/example/demo/domain/member/enums/FoodName.java
+new file mode 100644
+--- /dev/null	(date 1759721924000)
++++ b/demo/src/main/java/com/example/demo/domain/member/enums/FoodName.java	(date 1759721924000)
+@@ -0,0 +1,6 @@
++package com.example.demo.domain.member.enums;
++
++public enum FoodName {
++    한식, 구이, 양식, 중식, 일식, 치킨,
++    분식, 고기, 도시락, 야식, 패스트푸드, 디저트, 아시안푸드
++}
+Index: demo/src/main/java/com/example/demo/domain/member/enums/TermDtype.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/demo/src/main/java/com/example/demo/domain/member/enums/TermDtype.java b/demo/src/main/java/com/example/demo/domain/member/enums/TermDtype.java
+new file mode 100644
+--- /dev/null	(date 1761491128157)
++++ b/demo/src/main/java/com/example/demo/domain/member/enums/TermDtype.java	(date 1761491128157)
+@@ -0,0 +1,5 @@
++package com.example.demo.domain.member.enums;
++
++public enum TermDtype {
++    AGE, SERVICE, PRIVACY, LOCATION, MARKETING
++}

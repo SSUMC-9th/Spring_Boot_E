@@ -1,12 +1,11 @@
 package com.example.demo.domain.member.entity;
 
+import com.example.demo.domain.member.enums.AlramDtype;
 import com.example.demo.global.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Builder
@@ -21,14 +20,9 @@ public class Alram extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "is_contained", nullable = false)
-    private boolean isContained;
-
-    @OneToMany(mappedBy = "alram", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-    private List<Marketing> marketingList = new ArrayList<>();
-
-    @OneToMany(mappedBy = "alram", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-    private List<Notice> noticeList = new ArrayList<>();
+    @Column(name = "alram_dtype", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private AlramDtype alramDtype;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")

@@ -1,7 +1,6 @@
 package com.example.demo.domain.store.entity;
 
-import com.example.demo.domain.member.entity.Region;
-import com.example.demo.domain.review.entity.Review;
+import com.example.demo.domain.mission.entity.Mission;
 import com.example.demo.global.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -23,13 +22,12 @@ public class Store extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "address", nullable = false)
-    private String address;
+    @Column(name = "store_name", nullable = false)
+    private String storeName;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "region_id")
-    private Region region;
+    @Column(name = "store_address", nullable = false)
+    private String storeAddress;
 
     @OneToMany(mappedBy = "store", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-    private List<Review> reviewList = new ArrayList<>();
+    private List<Mission> missionList = new ArrayList<>();
 }
