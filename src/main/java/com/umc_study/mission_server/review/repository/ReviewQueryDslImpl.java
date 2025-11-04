@@ -87,7 +87,7 @@ public class ReviewQueryDslImpl implements ReviewQueryDsl {
 
         BooleanBuilder builder = new BooleanBuilder();
         for (String regionName : regionNames) {
-            builder.or(member.name.eq(regionName));
+            builder.or(store.address1.eq(regionName));
         }
 
         return builder;
