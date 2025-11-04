@@ -1,6 +1,9 @@
 package com.example.umc9th.domain.common;
 
+
 import jakarta.persistence.Column; // 👈 import 추가
+
+
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
@@ -15,6 +18,7 @@ import java.time.LocalDateTime;
 @Getter
 public abstract class BaseEntity {
 
+
     @CreatedDate
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
@@ -25,4 +29,3 @@ public abstract class BaseEntity {
 
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
-}
