@@ -1,4 +1,4 @@
-package com.umc_study.mission_server.review.entity;
+package com.umc_study.mission_server.review.domain;
 
 import jakarta.persistence.*;
 import lombok.*;

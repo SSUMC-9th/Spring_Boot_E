@@ -1,7 +1,7 @@
 package com.umc_study.mission_server.review.repository;
 
-import com.querydsl.core.types.Predicate;
-import com.umc_study.mission_server.review.entity.Review;
+import com.umc_study.mission_server.review.domain.Review;
+import com.umc_study.mission_server.review.domain.ReviewSearchQueries;
 import java.util.List;
 
 public interface ReviewQueryDsl {

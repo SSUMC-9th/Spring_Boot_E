@@ -1,4 +1,4 @@
-package com.umc_study.mission_server.review.entity;
+package com.umc_study.mission_server.review.domain;
 
 import com.umc_study.mission_server.common.entity.BaseEntity;
 import com.umc_study.mission_server.member.entity.Member;

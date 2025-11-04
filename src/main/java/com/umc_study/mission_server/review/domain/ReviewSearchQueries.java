@@ -1,4 +1,4 @@
-package com.umc_study.mission_server.review.repository;
+package com.umc_study.mission_server.review.domain;
 
 import com.umc_study.mission_server.common.Range;
 import java.util.Collections;

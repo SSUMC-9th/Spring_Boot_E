@@ -1,6 +1,6 @@
 package com.umc_study.mission_server.review.repository;
 
-import com.umc_study.mission_server.review.entity.Review;
+import com.umc_study.mission_server.review.domain.Review;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
