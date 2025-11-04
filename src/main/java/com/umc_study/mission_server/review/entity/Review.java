@@ -43,7 +43,7 @@ public class Review extends BaseEntity {
     @JoinColumn(name = "author_id", nullable = false)
     private Member author;
 
-    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "review", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private List<ReviewImage> images = new ArrayList<>();
 }

@@ -13,6 +13,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Table(name = "mission")
+@NamedEntityGraph(
+    name = "Mission.withStore",
+    attributeNodes = @NamedAttributeNode("store")
+)
 public class Mission {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
