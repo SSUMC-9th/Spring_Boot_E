@@ -1,8 +1,9 @@
 package com.umc_study.mission_server.review.controller;
 
-import com.umc_study.mission_server.review.entity.Review;
-import com.umc_study.mission_server.review.repository.ReviewRepository;
-import java.util.Optional;
+import com.umc_study.mission_server.review.dto.ReviewSearchRequest;
+import com.umc_study.mission_server.review.domain.Review;
+import com.umc_study.mission_server.review.service.ReviewService;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,25 +15,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ReviewController {
     
-    private final ReviewRepository reviewRepository;
+    private final ReviewService reviewService;
 
-    @GetMapping
-    public ResponseEntity<List<Review>> test() {
-        // all
-        List<Review> reviews = reviewRepository.findAll();
-
-        // read
-        Optional<Review> review = reviewRepository.findById(1L);
-
-        // create
-        Review newReview = Review.builder()
-            .content("맛잇어요")
-            .build();
-        reviewRepository.save(newReview);
-
-        // delete
-        reviewRepository.delete(review.get());
-
+    @PostMapping("/search")
+    public ResponseEntity<List<Review>> search(ReviewSearchRequest request) {
+        List<Review> reviews = reviewService.search(request);
         return ResponseEntity.ok(reviews);
     }
 }
