@@ -1,4 +1,4 @@
-// .../domain/review/repository/ReviewRepository.java
+// com/example/umc9th/domain/review/repository/ReviewRepository.java
 package com.example.umc9th.domain.review.repository;
 
 import com.example.umc9th.domain.member.entity.Member;
@@ -7,7 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ReviewRepository extends JpaRepository<Review, Long> {
-    // "리뷰 작성" 기능은 JpaRepository에 이미 있는 save() 메서드를 사용
+// JpaRepository<Review, Long> 뒤에 , ReviewRepositoryCustom 을 추가!
+public interface ReviewRepository extends JpaRepository<Review, Long>, ReviewRepositoryCustom {
+
+    // 5주차 때 만든 메서드 (그대로)
     Page<Review> findAllByMember(Member member, Pageable pageable);
 }
