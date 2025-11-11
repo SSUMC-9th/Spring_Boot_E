@@ -1,8 +1,8 @@
 package com.umc_study.mission_server.review.repository;
 
 import static com.umc_study.mission_server.member.entity.QMember.member;
-import static com.umc_study.mission_server.review.entity.QReview.review;
-import static com.umc_study.mission_server.review.entity.QReviewImage.reviewImage;
+import static com.umc_study.mission_server.review.domain.QReview.review;
+import static com.umc_study.mission_server.review.domain.QReviewImage.reviewImage;
 import static com.umc_study.mission_server.store.entity.QStore.store;
 
 import com.querydsl.core.BooleanBuilder;
