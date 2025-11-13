@@ -8,7 +8,7 @@ public class TestConverter {
             String testing
     ) {
         return TestResDTO.Testing.builder()
-                .testString(testing)
+                .testing(testing)
                 .build();
     }
     // 객체 -> DTO
