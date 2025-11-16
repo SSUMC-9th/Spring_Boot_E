@@ -8,6 +8,5 @@ import lombok.Getter;
 @Getter
 //프로젝트 exception
 public class BusinessException extends RuntimeException {
-
     private BaseErrorCode code;
 }
