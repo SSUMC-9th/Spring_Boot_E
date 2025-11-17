@@ -23,7 +23,7 @@ public class TestController {
         // 응답 코드 정의
         GeneralSuccessCode code = GeneralSuccessCode.OK;
 
-        return ApiResponse.onSuccess(
+        return ApiResponse.isSuccess(
                 code,
                 TestConverter.toTestingDTO("This is Test!")
         );
@@ -39,6 +39,6 @@ public class TestController {
 
         // 응답 코드 정의
         GeneralSuccessCode code = GeneralSuccessCode.OK;
-        return ApiResponse.onSuccess(code, TestConverter.toExceptionDTO("This is Test!"));
+        return ApiResponse.OK(code, TestConverter.toExceptionDTO("This is Test!"));
     }
 }
