@@ -31,6 +31,7 @@ public class Mission {
     @Column(nullable = true)
     private LocalDateTime due;
 
+    @Setter
     @Enumerated(EnumType.STRING)
     @Column(length = 8, nullable = false)
     private MissionState state;
