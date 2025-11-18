@@ -32,5 +32,6 @@ public class Mission extends BaseEntity {
     private Store store;
 
     @OneToMany(mappedBy = "mission", cascade = CascadeType.ALL)
+    @Builder.Default
     private List<MemberMission> memberMissionList = new ArrayList<>();
 }
