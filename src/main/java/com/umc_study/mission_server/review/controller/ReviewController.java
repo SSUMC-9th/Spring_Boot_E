@@ -1,5 +1,6 @@
 package com.umc_study.mission_server.review.controller;
 
+import com.umc_study.mission_server.common.response.ApiResponse;
 import com.umc_study.mission_server.review.dto.ReviewSearchRequest;
 import com.umc_study.mission_server.review.domain.Review;
 import com.umc_study.mission_server.review.service.ReviewService;
@@ -18,8 +19,8 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @PostMapping("/search")
-    public ResponseEntity<List<Review>> search(ReviewSearchRequest request) {
+    public ApiResponse<List<Review>> search(@RequestBody ReviewSearchRequest request) {
         List<Review> reviews = reviewService.search(request);
-        return ResponseEntity.ok(reviews);
+        return ApiResponse.ok(reviews);
     }
 }

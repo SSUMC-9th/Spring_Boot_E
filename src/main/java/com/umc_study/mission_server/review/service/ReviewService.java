@@ -3,6 +3,8 @@ package com.umc_study.mission_server.review.service;
 import com.umc_study.mission_server.common.Range;
 import com.umc_study.mission_server.review.dto.ReviewSearchRequest;
 import com.umc_study.mission_server.review.domain.Review;
+import com.umc_study.mission_server.review.exception.ReviewErrorCode;
+import com.umc_study.mission_server.review.exception.ReviewException;
 import com.umc_study.mission_server.review.repository.ReviewRepository;
 import com.umc_study.mission_server.review.domain.ReviewSearchQueries;
 import com.umc_study.mission_server.review.domain.ReviewSearchQueries.ReviewSearchOrderMode;
@@ -35,6 +37,12 @@ public class ReviewService {
         if (request.getOrderMode() != null) {
             if (request.getOrderMode().equals("name")) {
                 orderMode = ReviewSearchOrderMode.NAME;
+            }
+            else if (request.getOrderMode().equals("latest")) {
+                orderMode = ReviewSearchOrderMode.LATEST;
+            }
+            else {
+                throw new ReviewException(ReviewErrorCode.BAD_SEARCH_ORDER_MODE);
             }
         }
 
