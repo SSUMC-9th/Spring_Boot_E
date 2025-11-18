@@ -85,7 +85,7 @@ public class Member extends BaseEntity {
     private Boolean notificationAskReply;
 
     @Column(name = "current_point", nullable = true)
-    private Long currentPoint;
+    private Long currentPoint = 0L;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
