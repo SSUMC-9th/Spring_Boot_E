@@ -8,6 +8,7 @@ import com.example.umc9th.domain.member_food.entity.MemberFood;
 import com.example.umc9th.domain.member_mission.entity.MemberMission;
 import com.example.umc9th.domain.member_term.entity.MemberTerm;
 import com.example.umc9th.domain.review.entity.Review;
+import com.example.umc9th.domain.store.enums.Address;
 import jakarta.persistence.*;
 import lombok.*;
 

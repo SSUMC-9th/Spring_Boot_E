@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,7 +20,7 @@ public class MemberController {
     // 회원가입
     @PostMapping("/sign-up")
     public ApiResponse<MemberResDTO.JoinDTO> signUp(
-            @RequestBody MemberReqDTO.JoinDTO dto
+            @RequestBody @Valid MemberReqDTO.JoinDTO dto
     ){
         return ApiResponse.of(MemberSuccessCode.FOUND, memberCommandService.signup(dto));
     }
