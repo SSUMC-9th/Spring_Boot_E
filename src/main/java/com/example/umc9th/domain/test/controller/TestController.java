@@ -18,27 +18,16 @@ public class TestController {
 
     private final TestQueryService testQueryService;
 
+    // 1. test() 메서드 수정
     @GetMapping("/test")
     public ApiResponse<TestResDTO.Testing> test() {
-        // 응답 코드 정의
-        GeneralSuccessCode code = GeneralSuccessCode.OK;
-
-        return ApiResponse.isSuccess(
-                code,
-                TestConverter.toTestingDTO("This is Test!")
-        );
+        return ApiResponse.onSuccess(TestConverter.toTestingDTO("This is Test!"));
     }
 
-    // 예외 상황
+    // 2. exception() 메서드 수정
     @GetMapping("/exception")
-    public ApiResponse<TestResDTO.Exception> exception(
-            @RequestParam Long flag
-    ) {
-
+    public ApiResponse<TestResDTO.Exception> exception(@RequestParam Long flag) {
         testQueryService.checkFlag(flag);
-
-        // 응답 코드 정의
-        GeneralSuccessCode code = GeneralSuccessCode.OK;
-        return ApiResponse.OK(code, TestConverter.toExceptionDTO("This is Test!"));
+        return ApiResponse.onSuccess(TestConverter.toExceptionDTO("This is Test!"));
     }
 }

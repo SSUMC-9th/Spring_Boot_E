@@ -8,6 +8,7 @@ import com.example.umc9th.domain.member_food.entity.MemberFood;
 import com.example.umc9th.domain.member_mission.entity.MemberMission;
 import com.example.umc9th.domain.member_term.entity.MemberTerm;
 import com.example.umc9th.domain.review.entity.Review;
+import com.example.umc9th.domain.store.enums.Address;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -44,6 +45,9 @@ public class Member extends BaseEntity {
     @Column(nullable = false, length = 40)
     private String address;
 
+    @Column(nullable = false, length = 40) // 상세주소 추가
+    private String detailAddress;
+
     // 소셜 로그인 관련 필드는 nullable = true 로 설정
     private String socialUid;
 
@@ -62,15 +66,19 @@ public class Member extends BaseEntity {
     // 4. 연관관계 매핑
     // Member가 삭제될 때 관련된 데이터들도 함께 삭제되도록 Cascade 설정
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    @Builder.Default
     // 1:N 관계에서 N쪽(FK를 가진 쪽)이 항상 주인이 됨
     private List<MemberFood> memberFoodList = new ArrayList<>();
 
      @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+     @Builder.Default
      private List<MemberMission> memberMissionList = new ArrayList<>();
 
      @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+     @Builder.Default
      private List<Review> reviewList = new ArrayList<>();
 
      @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+     @Builder.Default
      private List<MemberTerm> memberTermList = new ArrayList<>();
 }

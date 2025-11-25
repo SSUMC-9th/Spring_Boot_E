@@ -24,5 +24,6 @@ public class Term extends BaseEntity {
     private TermName termName;
 
     @OneToMany(mappedBy = "term", cascade = CascadeType.ALL)
+    @Builder.Default
     private List<MemberTerm> memberTermList = new ArrayList<>();
 }
