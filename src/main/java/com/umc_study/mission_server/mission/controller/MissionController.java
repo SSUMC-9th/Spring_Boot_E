@@ -52,6 +52,23 @@ public class MissionController {
         return ApiResponse.ok(MissionResponse.from(mission));
     }
 
+    @GetMapping("/missions/my")
+    @Operation(
+        summary = "내가 진행중인 미션 목록",
+        description = "나에게 등록된 미션 목록을 조회합니다. 페이지네이션 제공"
+    )
+    @ApiResponses({
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "성공")
+    })
+    public ApiResponse<MissionListResponse> getMyMissionList(
+        @RequestParam Long memberId,
+        @RequestParam(defaultValue = "1") Integer pageNumber
+    ) {
+        PageRequest pageRequest = PageRequest.of(pageNumber, 15);
+        MissionListResponse list = missionService.getMissionListByMemberId(memberId, pageRequest);
+        return ApiResponse.ok(list);
+    }
+
     @PatchMapping("/missions/{id}/start")
     public ApiResponse<MissionResponse> startMission(
         @PathVariable Long id

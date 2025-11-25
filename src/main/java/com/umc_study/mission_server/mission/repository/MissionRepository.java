@@ -14,10 +14,15 @@ import com.umc_study.mission_server.mission.entity.Mission;
 import com.umc_study.mission_server.mission.entity.MissionState;
 
 public interface MissionRepository extends JpaRepository<Mission, Long> {
-    
+    @Query("SELECT m FROM Mission m WHERE m.store.id = :storeId")
+    Page<Mission> findAllByStoreId(@Param("storeId") Long storeId, Pageable pageable);
+
     @EntityGraph(value = "Mission.withStore")
     @Query("SELECT m FROM Mission m WHERE m.id = :id")
     Optional<Mission> findByIdWithStore(@Param("id") Long id);
+
+    @Query("SELECT m FROM Mission m WHERE m.member.id = :memberId")
+    Page<Mission> findAllByMemberId(Long memberId, Pageable pageable);
 
     @EntityGraph(value = "Mission.withStore")
     @Query("SELECT m FROM Mission m WHERE m.member.id = :memberId")

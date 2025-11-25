@@ -60,7 +60,15 @@ public class MissionService {
         Store store = storeRepository.findById(storeId)
             .orElseThrow(() -> new StoreException(StoreErrorCode.STORE_NOT_FOUND));
 
-        Page<Mission> page = missionRepository.findAllWithStoreByMemberId(storeId, pageable);
+        Page<Mission> page = missionRepository.findAllByStoreId(storeId, pageable);
+        return MissionListResponse.from(page);
+    }
+
+    public MissionListResponse getMissionListByMemberId(Long memberId, Pageable pageable) {
+        Member member = memberRepository.findById(memberId)
+            .orElseThrow(() -> new MemberException(MemberErrorCode.NOT_FOUND));
+
+        Page<Mission> page = missionRepository.findAllByMemberId(memberId, pageable);
         return MissionListResponse.from(page);
     }
 }
