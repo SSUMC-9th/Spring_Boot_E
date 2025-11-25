@@ -3,6 +3,8 @@ package com.umc_study.mission_server.member.entity;
 import com.umc_study.mission_server.store.entity.FoodType;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +12,8 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "member_prefer_food_type")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 public class MemberFoodType {
 
     @Id

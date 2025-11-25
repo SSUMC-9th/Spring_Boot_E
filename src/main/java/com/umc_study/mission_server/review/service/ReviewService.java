@@ -1,6 +1,12 @@
 package com.umc_study.mission_server.review.service;
 
 import com.umc_study.mission_server.common.Range;
+import com.umc_study.mission_server.member.dto.MemberResponse;
+import com.umc_study.mission_server.member.entity.Member;
+import com.umc_study.mission_server.member.exception.MemberErrorCode;
+import com.umc_study.mission_server.member.exception.MemberException;
+import com.umc_study.mission_server.member.repository.MemberRepository;
+import com.umc_study.mission_server.review.dto.CreateReviewRequest;
 import com.umc_study.mission_server.review.dto.ReviewSearchRequest;
 import com.umc_study.mission_server.review.domain.Review;
 import com.umc_study.mission_server.review.exception.ReviewErrorCode;
@@ -8,6 +14,10 @@ import com.umc_study.mission_server.review.exception.ReviewException;
 import com.umc_study.mission_server.review.repository.ReviewRepository;
 import com.umc_study.mission_server.review.domain.ReviewSearchQueries;
 import com.umc_study.mission_server.review.domain.ReviewSearchQueries.ReviewSearchOrderMode;
+import com.umc_study.mission_server.store.entity.Store;
+import com.umc_study.mission_server.store.exception.StoreErrorCode;
+import com.umc_study.mission_server.store.exception.StoreException;
+import com.umc_study.mission_server.store.repository.StoreRepository;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -18,7 +28,28 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class ReviewService {
+    private final MemberRepository memberRepository;
+    private final StoreRepository storeRepository;
     private final ReviewRepository reviewRepository;
+
+    public Review create(Long storeId, Long memberId, CreateReviewRequest request) {
+        Store store = storeRepository.findById(storeId)
+            .orElseThrow(() -> new StoreException(StoreErrorCode.STORE_NOT_FOUND));
+
+        Member member = memberRepository.findById(memberId)
+            .orElseThrow(() -> new MemberException(MemberErrorCode.NOT_FOUND));
+
+        Review review = Review.builder()
+            .score(request.score())
+            .content(request.content())
+            .reply(null)
+            .replyAt(null)
+            .store(store)
+            .author(member)
+            .build();
+        reviewRepository.save(review);
+        return review;
+    }
 
     public List<Review> search(ReviewSearchRequest request) {
         ReviewSearchQueries queries = getQueryFromRequest(request);
