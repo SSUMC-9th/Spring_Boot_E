@@ -52,7 +52,21 @@ public class MissionService {
     public Mission start(Long missionId) {
         Mission mission = missionRepository.findById(missionId)
             .orElseThrow(() -> new MissionException(MissionErrorCode.NOT_FOUND));
+        if (mission.getState() == MissionState.PENDING) {
+            throw new MissionException(MissionErrorCode.INVALID_STATE_EXPECT_PENDING);
+        }
         mission.setState(MissionState.PROGRESS);
+        return missionRepository.save(mission);
+    }
+
+    @Transactional
+    public Mission success(Long missionId) {
+        Mission mission = missionRepository.findById(missionId)
+            .orElseThrow(() -> new MissionException(MissionErrorCode.NOT_FOUND));
+        if (mission.getState() == MissionState.PROGRESS) {
+            throw new MissionException(MissionErrorCode.INVALID_STATE_EXPECT_PROGRESS);
+        }
+        mission.setState(MissionState.SUCCESS);
         return missionRepository.save(mission);
     }
 

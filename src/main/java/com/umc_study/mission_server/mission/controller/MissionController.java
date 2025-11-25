@@ -76,4 +76,12 @@ public class MissionController {
         Mission mission = missionService.start(id);
         return ApiResponse.ok(MissionResponse.from(mission));
     }
+
+    @PatchMapping("/missions/{id}/success")
+    public ApiResponse<MissionResponse> successMission(
+        @PathVariable Long id
+    ) {
+        Mission mission = missionService.success(id);
+        return ApiResponse.ok(MissionResponse.from(mission));
+    }
 }
