@@ -31,6 +31,23 @@ public class ReviewController {
         return ApiResponse.ok(reviews);
     }
 
+    @GetMapping("/reviews/my")
+    @Operation(
+        summary = "내가 작성한 리뷰 목록",
+        description = "내가 작성한 리뷰 목록을 가져옵니다. 페이지네이션 제공"
+    )
+    @ApiResponses({
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "성공")
+    })
+    public ApiResponse<ReviewListResponse> getMyReviewList(
+        @RequestParam Long memberId,
+        @RequestParam(defaultValue = "1") Integer pageNumber
+    ) {
+        PageRequest pageRequest = PageRequest.of(pageNumber, 15);
+        ReviewListResponse list = reviewService.getReviewListByMemberId(memberId, pageRequest);
+        return ApiResponse.ok(list);
+    }
+
     @GetMapping("/stores/{storeId}/reviews")
     @Operation(
         summary = "가게 리뷰 목록 조회",

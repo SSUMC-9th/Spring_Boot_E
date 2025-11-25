@@ -9,4 +9,5 @@ import org.springframework.data.domain.Pageable;
 public interface ReviewQueryDsl {
     List<Review> search(ReviewSearchQueries queries);
     Page<Review> findAllByStoreId(Long storeId, Pageable pageable);
+    Page<Review> findAllByMemberId(Long memberId, Pageable pageable);
 }

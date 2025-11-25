@@ -125,4 +125,25 @@ public class ReviewQueryDslImpl implements ReviewQueryDsl {
         // content 가 하나면 countQuery 생략하는 최적화 적용
         return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchOne);
     }
+
+    @Override
+    public Page<Review> findAllByMemberId(Long memberId, Pageable pageable) {
+        // 리뷰 + 이미지 가져오기
+        List<Review> content = queryFactory
+            .selectFrom(review)
+            .where(review.author.id.eq(memberId))
+            .distinct()
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
+            .fetch();
+
+        // 갯수 세는 쿼리
+        JPAQuery<Long> countQuery = queryFactory
+            .select(review.countDistinct())
+            .from(review)
+            .where(review.author.id.eq(memberId));
+
+        // content 가 하나면 countQuery 생략하는 최적화 적용
+        return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchOne);
+    }
 }

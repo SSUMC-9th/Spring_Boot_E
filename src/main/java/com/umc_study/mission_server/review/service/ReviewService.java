@@ -62,6 +62,14 @@ public class ReviewService {
         return ReviewListResponse.from(page);
     }
 
+    public ReviewListResponse getReviewListByMemberId(Long memberId, Pageable pageable) {
+        Member member = memberRepository.findById(memberId)
+            .orElseThrow(() -> new MemberException(MemberErrorCode.NOT_FOUND));
+
+        Page<Review> page = reviewRepository.findAllByMemberId(memberId, pageable);
+        return ReviewListResponse.from(page);
+    }
+
     public List<Review> search(ReviewSearchRequest request) {
         ReviewSearchQueries queries = getQueryFromRequest(request);
         return reviewRepository.search(queries);
