@@ -8,8 +8,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface MissionRepository extends JpaRepository<Mission, Long>, MissionQueryDsl {
+public interface MissionRepository extends JpaRepository<Mission, Long>, MissionQueryDsl, MissionRepositoryCustom {
     Page<Mission> findByStoreStoreAddress(String storeAddress, Pageable pageable);
     Page<Mission> findByStatusIn(List<MissionStatus> statuses, Pageable pageable);
+
 
 }
