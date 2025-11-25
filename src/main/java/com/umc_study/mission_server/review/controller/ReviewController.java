@@ -26,6 +26,12 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @PostMapping("/reviews/search")
+    @Operation(
+        summary = "리뷰 검색"
+    )
+    @ApiResponses({
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "성공")
+    })
     public ApiResponse<List<Review>> search(@RequestBody ReviewSearchRequest request) {
         List<Review> reviews = reviewService.search(request);
         return ApiResponse.ok(reviews);
@@ -67,6 +73,12 @@ public class ReviewController {
     }
 
     @PostMapping("/stores/{storeId}/reviews")
+    @Operation(
+        summary = "리뷰 작성"
+    )
+    @ApiResponses({
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "성공")
+    })
     public ApiResponse<Review> createReview(
         @PathVariable Long storeId,
         @RequestBody CreateReviewRequest request

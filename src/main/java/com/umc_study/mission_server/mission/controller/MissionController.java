@@ -45,6 +45,12 @@ public class MissionController {
     }
 
     @PostMapping("/missions")
+    @Operation(
+        summary = "미션 생성"
+    )
+    @ApiResponses({
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "성공")
+    })
     public ApiResponse<MissionResponse> createMission(
         @RequestBody CreateMissionRequest request
     ) {
@@ -70,6 +76,12 @@ public class MissionController {
     }
 
     @PatchMapping("/missions/{id}/start")
+    @Operation(
+        summary = "미션 시작 처리"
+    )
+    @ApiResponses({
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "성공")
+    })
     public ApiResponse<MissionResponse> startMission(
         @PathVariable Long id
     ) {
@@ -78,6 +90,12 @@ public class MissionController {
     }
 
     @PatchMapping("/missions/{id}/success")
+    @Operation(
+        summary = "미션 성공 처리"
+    )
+    @ApiResponses({
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "성공")
+    })
     public ApiResponse<MissionResponse> successMission(
         @PathVariable Long id
     ) {
