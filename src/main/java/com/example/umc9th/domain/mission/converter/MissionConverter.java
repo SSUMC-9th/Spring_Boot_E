@@ -15,7 +15,7 @@ public class MissionConverter {
         return MissionResDTO.MissionPreviewDTO.builder()
                 .missionId(mission.getId())
                 .storeName(mission.getStore().getStoreName())
-                .missionCondition(mission.getConditinal()) // 오타 수정 권장 (conditional)
+                .conditional(mission.getConditinal()) // 오타 수정 권장 (conditional)
                 .point(mission.getPoint())
                 .createdAt(mission.getCreatedAt())
                 .build();
@@ -33,6 +33,23 @@ public class MissionConverter {
                 .conditinal(dto.getMissionCondition()) // 👈 Mission Entity의 필드명에 맞춰서 사용
                 .point(dto.getPoint())
                 .store(store) // Service에서 찾은 Store 엔티티 주입
+                .build();
+    }
+
+    // 2. Page -> MissionListDTO
+    public static MissionResDTO.MissionListDTO toMissionListDTO(Page<Mission> missionPage) {
+
+        List<MissionResDTO.MissionPreviewDTO> missionPreviewList = missionPage.stream()
+                .map(MissionConverter::toMissionPreviewDTO)
+                .collect(Collectors.toList());
+
+        return MissionResDTO.MissionListDTO.builder()
+                .missionList(missionPreviewList)
+                .isFirst(missionPage.isFirst())
+                .isLast(missionPage.isLast())
+                .totalPage(missionPage.getTotalPages())
+                .totalElements(missionPage.getTotalElements())
+                .listSize(missionPreviewList.size())
                 .build();
     }
 }

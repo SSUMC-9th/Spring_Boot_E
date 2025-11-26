@@ -15,4 +15,5 @@ public interface MissionRepository extends JpaRepository<Mission, Long> {
     // JPQL을 사용해 Mission(m)과 Store(s)를 JOIN합니다.
     @Query("SELECT m FROM Mission m JOIN m.store s WHERE s.region = :region")
     Page<Mission> findMissionsByRegion(@Param("region") Region region, Pageable pageable);
+    Page<Mission> findByStoreId(Long storeId, Pageable pageable);
 }

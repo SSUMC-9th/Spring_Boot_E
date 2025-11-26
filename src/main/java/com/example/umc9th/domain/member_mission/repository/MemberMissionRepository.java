@@ -12,4 +12,5 @@ public interface MemberMissionRepository extends JpaRepository<MemberMission, Lo
     // "내가(Member) 진행중/진행 완료(isComplete)한 미션" 목록 조회 (페이징 포함)
     // 메서드 이름(findAllByMemberAndIsComplete)만으로 쿼리가 생성됩니다.
     Page<MemberMission> findAllByMemberAndIsComplete(Member member, Boolean isComplete, Pageable pageable);
+    Page<MemberMission> findByMemberIdAndIsComplete(Long memberId, Boolean isComplete, Pageable pageable);
 }

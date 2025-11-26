@@ -3,6 +3,7 @@ package com.example.umc9th.domain.member_mission.converter;
 import com.example.umc9th.domain.member.entity.Member;
 import com.example.umc9th.domain.member_mission.dto.res.MemberMissionResDTO;
 import com.example.umc9th.domain.member_mission.entity.MemberMission;
+import com.example.umc9th.domain.mission.dto.res.MissionResDTO;
 import com.example.umc9th.domain.mission.entity.Mission;
 import org.springframework.data.domain.Page;
 
@@ -56,6 +57,35 @@ public class MemberMissionConverter {
                 .memberId(memberMission.getMember().getId())
                 .missionId(memberMission.getMission().getId())
                 .challengedAt(memberMission.getCreatedAt())
+                .build();
+    }
+
+    // MemberMission 엔티티를 MissionResDTO.MissionPreviewDTO로 변환
+    public static MissionResDTO.MissionPreviewDTO toMissionPreviewDTO(MemberMission memberMission) {
+        Mission mission = memberMission.getMission();
+
+        return MissionResDTO.MissionPreviewDTO.builder()
+                .missionId(mission.getId())
+                .storeName(mission.getStore().getStoreName()) // Mission 엔티티를 통해 Store 이름 가져옴
+                .point(mission.getPoint())
+                .createdAt(memberMission.getCreatedAt()) // 미션 수령/시작 시점으로 변경 가능
+                .build();
+    }
+
+    // Page<MemberMission>을 MissionResDTO.MissionListDTO로 변환
+    public static MissionResDTO.MissionListDTO toMissionListDTO(Page<MemberMission> memberMissionPage) {
+
+        List<MissionResDTO.MissionPreviewDTO> missionPreviewList = memberMissionPage.stream()
+                .map(MemberMissionConverter::toMissionPreviewDTO)
+                .collect(Collectors.toList());
+
+        return MissionResDTO.MissionListDTO.builder()
+                .missionList(missionPreviewList)
+                .isFirst(memberMissionPage.isFirst())
+                .isLast(memberMissionPage.isLast())
+                .totalPage(memberMissionPage.getTotalPages())
+                .totalElements(memberMissionPage.getTotalElements())
+                .listSize(missionPreviewList.size())
                 .build();
     }
 }

@@ -50,4 +50,47 @@ public class ReviewConverter {
                 .store(store)   // Service에서 찾은 Store 엔티티 주입
                 .build();
     }
+    // ⭐ 4. Page -> ReviewPreViewListDTO (ServiceImpl이 호출하는 메서드) ⭐
+    public static ReviewResDTO.ReviewPreViewListDTO toReviewPreviewListDTO(Page<Review> reviewPage) {
+
+        List<ReviewResDTO.ReviewPreviewDTO> reviewPreviewList = reviewPage.stream()
+                .map(ReviewConverter::toReviewPreviewDTO)
+                .collect(Collectors.toList());
+
+        return ReviewResDTO.ReviewPreViewListDTO.builder() // 💡 DTO 이름 주의!
+                .reviewList(reviewPreviewList)
+                .isFirst(reviewPage.isFirst())
+                .isLast(reviewPage.isLast())
+                .totalPage(reviewPage.getTotalPages())
+                .totalElements(reviewPage.getTotalElements())
+                .listSize(reviewPreviewList.size())
+                .build();
+    }
+    // 1. Entity -> MyReviewPreviewDTO
+    public static ReviewResDTO.MyReviewPreviewDTO toMyReviewPreviewDTO(Review review) {
+        return ReviewResDTO.MyReviewPreviewDTO.builder()
+                .reviewId(review.getId())
+                .memberName(review.getMember().getName()) // member 엔티티의 name 필드 사용
+                .rating(review.getRating())
+                .comment(review.getComment())
+                .createdAt(review.getCreatedAt())
+                .build();
+    }
+
+    // 2. Page -> MyReviewListDTO
+    public static ReviewResDTO.MyReviewListDTO toMyReviewListDTO(Page<Review> reviewPage) {
+
+        List<ReviewResDTO.MyReviewPreviewDTO> reviewPreviewList = reviewPage.stream()
+                .map(ReviewConverter::toMyReviewPreviewDTO)
+                .collect(Collectors.toList());
+
+        return ReviewResDTO.MyReviewListDTO.builder()
+                .reviewList(reviewPreviewList)
+                .isFirst(reviewPage.isFirst())
+                .isLast(reviewPage.isLast())
+                .totalPage(reviewPage.getTotalPages())
+                .totalElements(reviewPage.getTotalElements())
+                .listSize(reviewPreviewList.size())
+                .build();
+    }
 }
