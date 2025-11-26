@@ -1,7 +1,11 @@
 package com.example.umc9th.domain.review.dto.req;
 
 import jakarta.validation.constraints.*;
+import lombok.Builder;
 import lombok.Getter;
+
+import java.time.LocalDate;
+import java.util.List;
 
 public class ReviewReqDTO {
 

@@ -1,5 +1,6 @@
 package com.example.umc9th.domain.review.service.query;
 
+import com.example.umc9th.domain.review.dto.res.ReviewResDTO;
 import com.example.umc9th.domain.review.entity.Review;
 import com.example.umc9th.domain.review.entity.QReview; // Q클래스 임포트
 import com.example.umc9th.domain.review.repository.ReviewQueryDsl;
@@ -51,5 +52,11 @@ public class ReviewQueryServiceImpl implements ReviewQueryService {
 
         // 4. Repository로 조립된 WHERE 절(builder)을 전달하여 쿼리 실행
         return reviewRepository.searchReview(builder);
+    }
+    @Override
+    public ReviewResDTO.ReviewPreViewListDTO findReview(
+
+    ){
+        return null;
     }
 }
