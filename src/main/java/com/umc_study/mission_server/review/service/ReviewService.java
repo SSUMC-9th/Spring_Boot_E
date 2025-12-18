@@ -7,6 +7,7 @@ import com.umc_study.mission_server.member.exception.MemberErrorCode;
 import com.umc_study.mission_server.member.exception.MemberException;
 import com.umc_study.mission_server.member.repository.MemberRepository;
 import com.umc_study.mission_server.review.dto.CreateReviewRequest;
+import com.umc_study.mission_server.review.dto.ReviewListResponse;
 import com.umc_study.mission_server.review.dto.ReviewSearchRequest;
 import com.umc_study.mission_server.review.domain.Review;
 import com.umc_study.mission_server.review.exception.ReviewErrorCode;
@@ -23,6 +24,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -49,6 +52,22 @@ public class ReviewService {
             .build();
         reviewRepository.save(review);
         return review;
+    }
+
+    public ReviewListResponse getReviewListByStoreId(Long storeId, Pageable pageable) {
+        Store store = storeRepository.findById(storeId)
+            .orElseThrow(() -> new StoreException(StoreErrorCode.STORE_NOT_FOUND));
+
+        Page<Review> page = reviewRepository.findAllByStoreId(storeId, pageable);
+        return ReviewListResponse.from(page);
+    }
+
+    public ReviewListResponse getReviewListByMemberId(Long memberId, Pageable pageable) {
+        Member member = memberRepository.findById(memberId)
+            .orElseThrow(() -> new MemberException(MemberErrorCode.NOT_FOUND));
+
+        Page<Review> page = reviewRepository.findAllByMemberId(memberId, pageable);
+        return ReviewListResponse.from(page);
     }
 
     public List<Review> search(ReviewSearchRequest request) {
