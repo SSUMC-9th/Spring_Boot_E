@@ -1,4 +1,4 @@
-package com.umc_study.mission_server.common.auth.enums;
+package com.umc_study.mission_server.common.auth;
 
 import com.umc_study.mission_server.member.entity.Member;
 import java.util.Collection;

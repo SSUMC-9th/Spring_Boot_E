@@ -1,9 +1,12 @@
 package com.umc_study.mission_server.member.controller;
 
 import com.umc_study.mission_server.common.response.ApiResponse;
+import com.umc_study.mission_server.member.dto.LoginRequest;
+import com.umc_study.mission_server.member.dto.LoginResponse;
 import com.umc_study.mission_server.member.dto.MemberResponse;
 import com.umc_study.mission_server.member.dto.SignupRequest;
 import com.umc_study.mission_server.member.dto.UpdatePreferFoodTypesRequest;
+import com.umc_study.mission_server.member.service.AuthService;
 import com.umc_study.mission_server.member.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/members")
 @RequiredArgsConstructor
 public class MemberController {
-
+    private final AuthService authService;
     private final MemberService memberService;
 
     @PostMapping("/signup")
@@ -29,5 +32,11 @@ public class MemberController {
     public ApiResponse<?> updatePreferFoods(@RequestBody @Valid UpdatePreferFoodTypesRequest request) {
         memberService.updatePreferFoodTypes(request.memberId(), request.foodTypes());
         return ApiResponse.ok(null);
+    }
+
+    @PostMapping("/login")
+    public ApiResponse<LoginResponse> login(@RequestBody @Valid LoginRequest request) {
+        LoginResponse response = authService.login(request);
+        return ApiResponse.ok(response);
     }
 }
