@@ -1,7 +1,6 @@
 package com.example.umc9th.domain.user_mission.service;
 
 import com.example.umc9th.domain.user.entity.User;
-import com.example.umc9th.domain.user.repository.UserRepository;
 import com.example.umc9th.domain.user_mission.entity.UserMission;
 import com.example.umc9th.domain.user_mission.repository.UserMissionRepository;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.example.umc9th.domain.user.repository.UserRepository;
 
 @Service
 @RequiredArgsConstructor

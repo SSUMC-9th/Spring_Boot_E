@@ -17,3 +17,6 @@ spring:
         # ???? SQL ??? ??? ? ? ?? ??? ?????.
         show_sql: true
         format_sql: true
+jwt:
+  secret: "vmfhalstkfkdgodyqksghkrdltdmsqkdghkrdltdmsqkdghkrdltdmsqkdghkrdltdmsqkdghkrdltdms"
+  # 👆 32글자 이상 아무 문자열이나 아주 길게 입력하세요! (Base64 인코딩 권장하지만 일단 문자열로)

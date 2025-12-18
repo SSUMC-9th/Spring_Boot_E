@@ -3,7 +3,7 @@ package com.example.umc9th.domain.review.entity;
 import com.example.umc9th.domain.common.BaseEntity;
 import com.example.umc9th.domain.store.entity.Store;
 
-import com.example.umc9th.domain.member.entity.Member;
+import com.example.umc9th.domain.user.entity.User;
 
 
 import jakarta.persistence.*;
@@ -28,7 +28,7 @@ public class Review extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
 
-    private Member member;
+    private User user;
 
 
 
