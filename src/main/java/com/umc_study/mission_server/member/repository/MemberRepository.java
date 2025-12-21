@@ -9,4 +9,6 @@ import org.springframework.data.repository.query.Param;
 public interface MemberRepository extends JpaRepository<Member, Long> {
     @Query("SELECT DISTINCT m FROM Member m WHERE m.id = :id")
     Optional<Member> findById(@Param("id") Long id);
+
+    Optional<Member> findByEmail(String email);
 }

@@ -1,5 +1,6 @@
 package com.umc_study.mission_server.member.service;
 
+import com.umc_study.mission_server.common.auth.Role;
 import com.umc_study.mission_server.member.dto.MemberResponse;
 import com.umc_study.mission_server.member.dto.SignupRequest;
 import com.umc_study.mission_server.member.entity.Member;
@@ -7,14 +8,13 @@ import com.umc_study.mission_server.member.entity.MemberFoodType;
 import com.umc_study.mission_server.member.exception.MemberErrorCode;
 import com.umc_study.mission_server.member.exception.MemberException;
 import com.umc_study.mission_server.member.repository.MemberRepository;
-import com.umc_study.mission_server.store.entity.FoodType;
 import com.umc_study.mission_server.store.exception.StoreErrorCode;
 import com.umc_study.mission_server.store.exception.StoreException;
 import com.umc_study.mission_server.store.repository.FoodTypeRepository;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,9 +23,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberService {
     private final MemberRepository memberRepository;
     private final FoodTypeRepository foodTypeRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public MemberResponse signup(SignupRequest request) {
+        String encodedPassword = passwordEncoder.encode(request.password());
         LocalDateTime now = LocalDateTime.now();
         Member member = Member.builder()
             .providerId("test")
@@ -50,6 +52,8 @@ public class MemberService {
             .notificationNewEvent(request.notificationSettings().newEvent())
             .notificationReviewReply(request.notificationSettings().reviewReply())
             .currentPoint(0L)
+            .password(encodedPassword)
+            .role(Role.ROLE_USER)
             .build();
         memberRepository.save(member);
         return MemberResponse.from(member);

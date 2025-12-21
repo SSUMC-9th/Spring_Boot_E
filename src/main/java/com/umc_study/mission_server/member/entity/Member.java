@@ -1,5 +1,6 @@
 package com.umc_study.mission_server.member.entity;
 
+import com.umc_study.mission_server.common.auth.Role;
 import com.umc_study.mission_server.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -90,4 +91,10 @@ public class Member extends BaseEntity {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private Set<MemberFoodType> preferFoodTypes = new HashSet<>();
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    @Column(name = "password")
+    private String password;
 }
